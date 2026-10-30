@@ -129,14 +129,15 @@ function isPlaceholder(r){return PLACEHOLDER_IDS.has(r.id)||/^(?:h105_\d+_\d+|bt
 function how(r){
  const id=r.id,actor=character(r),who=label(actor),e=element(r.name);
  const g=(category,guide,detail='',confidence='Guide',kind='regular')=>identified(category,guide,detail,confidence,kind);
+ const count=(n,singular,plural=singular+'s')=>`${n} ${n===1?singular:plural}`;
  if(isPlaceholder(r))return g('Internal entry','No dialogue text is identified for this entry.','There is no known trigger. Hidden from the default list.','Unknown','internal');
  if(id===0)return g('Special enemy','Start a fight with the Reaper.','A rare encounter, not useful for regular farming.');
  if(id===1)return g('Rare enemy','Start a fight against a Golden Hand.');
  if(id>=2&&id<=4)return g('Strong enemy','Start a fight against a Shadow much stronger than your party.','Weakness Scan may override these lines after Rise Social Link rank 2.');
- if(id>=5&&id<=14)return g('Normal encounter',`Start a neutral battle against ${Math.floor((id-5)/2)+1} enemies.`,'Neither side should gain the initiative. These lines become rarer after Weakness Scan.');
- if(id>=15&&id<=24)return g('Player advantage',`Start a battle with an advantage against ${Math.floor((id-15)/2)+1} enemies.`,'Strike a Shadow from behind. Weakness Scan may override the opening line.');
- if(id>=25&&id<=34)return g('Enemy advantage',`Let ${Math.floor((id-25)/2)+1} enemies ambush your party.`,'Let a Shadow attack you from behind. Weakness Scan may override the line.');
- if(id>=35&&id<=44)return g('Reinforcements',`Let an enemy summon ${Math.floor((id-35)/2)+1} reinforcements in battle.`,'This is not the same as starting against that many enemies.');
+ if(id>=5&&id<=14)return g('Normal encounter',`Start a neutral battle against ${count(Math.floor((id-5)/2)+1,'enemy','enemies')}.`,'Neither side should gain the initiative. These lines become rarer after Weakness Scan.');
+ if(id>=15&&id<=24)return g('Player advantage',`Start a battle with an advantage against ${count(Math.floor((id-15)/2)+1,'enemy','enemies')}.`,'Strike a Shadow from behind. Weakness Scan may override the opening line.');
+ if(id>=25&&id<=34)return g('Enemy advantage',`Let ${count(Math.floor((id-25)/2)+1,'enemy','enemies')} ambush your party.`,'Let a Shadow attack you from behind. Weakness Scan may override the line.');
+ if(id>=35&&id<=44)return g('Reinforcements',`Let an enemy summon ${count(Math.floor((id-35)/2)+1,'reinforcement')} in battle.`,'This is not the same as starting against that many enemies.');
  if(id>=45&&id<=58)return g('Enemy resistance',`Start a fight against a Shadow immune to ${e} attacks.`,'The callout must appear in battle, not in Analysis. Requires Weakness Scan (Rise Social Link rank 2).');
  if(id>=59&&id<=72)return g('Enemy weakness',`Start a fight against a Shadow weak to ${e} attacks.`,'The callout must appear in battle, not in Analysis. Requires Weakness Scan (Rise Social Link rank 2).');
  if(id>=73&&id<=79)return g('Ally knocked out',`Have ${who} fall to zero HP while the fight continues.`);
@@ -158,7 +159,7 @@ function how(r){
  if(id>=147&&id<=153)return g('Attack lowered',`Have ${who} receive an Attack debuff, such as Tarunda.`,'The debuff must affect your teammate.');
  if(id>=154&&id<=160)return g('Defense lowered',`Have ${who} receive a Defense debuff, such as Rakunda.`);
  if(id>=161&&id<=167)return g('Agility lowered',`Have ${who} receive an Agility debuff, such as Sukunda.`);
- if(id>=168&&id<=177)return g('Enemies remaining',`Leave exactly ${5-Math.floor((id-168)/2)} enemies alive in battle.`,'Defeat some enemies without ending the fight.');
+ if(id>=168&&id<=177)return g('Enemies remaining',`Leave exactly ${count(5-Math.floor((id-168)/2),'enemy','enemies')} alive in battle.`,'Defeat some enemies without ending the fight.');
  if(id>=178&&id<=185)return g('Low HP',id===178?'Have two or more party members below half HP.':`Have ${who} fall below half HP in battle.`,'Wait for Rise to comment before healing.');
  const states={186:'Panic',187:'Poison',188:'Fear',189:'Rage',190:'Knock Down',191:'Exhaustion',192:'Enervation',193:'Silence / Seal'};
  if(states[id])return g(states[id],`Have the protagonist suffer ${states[id]} during battle.`);
@@ -170,9 +171,9 @@ function how(r){
  if(id>=309&&id<=338)return g('Very weak enemy',`Start a battle against a Shadow far below your party’s level${id>=311?', with the elemental property described in the line':''}.`,'Weakness Scan makes these callouts harder to hear.','Estimated');
  if(id>=339&&id<=341)return g('Rush mode',id===341?'Keep Rush mode active for several turns.':'Activate Rush mode in battle.');
  if(id>=342&&id<=348)return g('Defeat all enemies',`Have ${who} defeat all remaining enemies in one action.`,'Defeat means reduce HP to zero, not just knock down.');
- for(const [a,b,n] of [[349,355,4],[356,362,3],[363,369,2],[370,390,1]])if(id>=a&&id<=b)return g('Enemies defeated',`Have ${who} defeat ${n} enemies in one action.`,'Enemies must be defeated rather than simply knocked down.');
+ for(const [a,b,n] of [[349,355,4],[356,362,3],[363,369,2],[370,390,1]])if(id>=a&&id<=b)return g('Enemies defeated',`Have ${who} defeat ${count(n,'enemy','enemies')} in one action.`,'Enemies must be defeated rather than simply knocked down.');
  if(id>=391&&id<=397)return g('Dodge',`Have ${who} dodge an enemy attack.`);
- for(const [a,b,n] of [[398,404,4],[405,411,3],[412,418,2],[419,425,1]])if(id>=a&&id<=b)return g('Enemies knocked down',`Have ${who} knock down ${n} enemies with one action.`,'A weakness hit or critical can knock down an enemy without defeating it.');
+ for(const [a,b,n] of [[398,404,4],[405,411,3],[412,418,2],[419,425,1]])if(id>=a&&id<=b)return g('Enemies knocked down',`Have ${who} knock down ${count(n,'enemy','enemies')} with one action.`,'A weakness hit or critical can knock down an enemy without defeating it.');
  if(id>=426&&id<=446)return g('Hit a weakness',`Have ${who} hit an enemy weakness.`,'Use a skill with an element the Shadow is weak against.');
  if(id>=447&&id<=467)return g('Critical / strong hit',`Have ${who} land a critical or another strong attack.`,'The exact trigger can vary across these lines.','Estimated');
  if(id>=468&&id<=474)return g('Missed attack',`Have ${who} miss an attack.`,'Missing an attack is different from dodging.');
