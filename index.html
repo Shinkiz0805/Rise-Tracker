@@ -1,0 +1,273 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#26102b">
+<meta name="description" content="Rise Tracker Community Edition: acompanhe as falas da Rise em Persona 4 Golden e descubra o que falta para Hardcore Risette Fan. Saves processados localmente.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Rise Tracker | Persona 4 Golden">
+<meta property="og:description" content="Acompanhe o progresso das falas da Rise e filtre por personagem. Sem Cheat Engine e sem enviar o save.">
+<title>Rise Tracker · Community Edition | Persona 4 Golden</title><style>
+
+:root{--bg:#0b0716;--panel:#171127;--panel2:#20182f;--stroke:#453650;--ink:#fff5fd;--muted:#c1afc8;--rose:#fa55b7;--hot:#ff2d98;--lemon:#ffe76c;--mint:#71f0c0;--light:#eadffa;font-family:'DM Sans',system-ui,sans-serif;color:var(--ink);background:var(--bg);font-synthesis:none}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(ellipse 800px 600px at 86% -5%,#4e0d54 0%,transparent 73%), radial-gradient(ellipse 420px 460px at -10% 48%,#2e1952 0%,transparent 80%),#0b0716}button,input,select{font:inherit}button{cursor:pointer}a{color:#ffe76c}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--lemon);outline-offset:2px}button:disabled{opacity:.5;cursor:default}
+.shell{max-width:1290px;padding:0 26px 70px;margin:0 auto}.topbar{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:20px 0 18px}.brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.04em}.brand-star{display:grid;place-items:center;width:37px;height:37px;background:var(--lemon);color:#331241;clip-path:polygon(50% 0,62% 30%,95% 15%,78% 48%,100% 70%,63% 72%,50% 100%,37% 72%,0 70%,22% 48%,5% 15%,38% 30%)}.brand small{font-weight:600;color:var(--muted);display:block;letter-spacing:.01em}.microchip{border:1px solid #7e607b;border-radius:99px;color:#f7d9ed;padding:8px 11px;font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}.navline{height:1px;background:linear-gradient(90deg,transparent,#8e4a85,transparent)}
+.hero{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:10px;margin-top:23px;min-height:278px;overflow:hidden;border-radius:24px;border:1px solid #7b376d;background:linear-gradient(117deg,#371238 0%,#3b1254 48%,#170c2c 100%);box-shadow:0 20px 56px #0006}.hero:before{content:'';position:absolute;inset:-40px;background:repeating-linear-gradient(-28deg,transparent 0 55px,#ffffff09 55px 57px);pointer-events:none}.hero-copy{padding:35px 42px;position:relative;z-index:3}.eyebrow{font-size:12px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:var(--lemon);display:flex;align-items:center;gap:8px}.eyebrow:before{content:'';width:19px;height:3px;background:var(--lemon)}.hero h1{font:900 clamp(54px,7vw,94px)/.87 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;letter-spacing:-.035em;margin:22px 0 16px;transform:skew(-5deg);text-shadow:5px 5px 0 #0e061c}.hero h1 em{font-style:normal;color:var(--lemon)}.hero p{max-width:470px;color:#f5dceb;font-size:14px;line-height:1.6;margin:0 0 20px}.hero-mark{position:relative;min-height:270px;isolation:isolate}.halo{position:absolute;width:300px;height:300px;top:0;left:8%;border:26px solid #ffce5299;border-radius:50%;box-shadow:0 0 0 15px #f356b033,0 0 0 34px #ffce5210;transform:rotate(-17deg)}.disc{position:absolute;left:21%;top:15%;width:236px;height:236px;border-radius:50%;background:repeating-conic-gradient(from -10deg,#f75eb6 0 18deg,#e341aa 18deg 36deg);box-shadow:16px 12px 0 #080518;transform:rotate(-9deg)}.starshape{position:absolute;left:27%;top:1%;font-size:128px;line-height:1;color:var(--lemon);text-shadow:8px 10px 0 #2a1043;transform:rotate(-15deg)}.rise-txt{position:absolute;top:36%;right:0;font:900 clamp(100px,14vw,184px)/.75 'Barlow Condensed',Impact,sans-serif;color:#ffbfe7;text-shadow:9px 9px 0 #31104c;transform:rotate(-11deg);letter-spacing:-.09em}.hero-ribbon{position:absolute;right:-30px;bottom:25px;background:var(--lemon);padding:8px 45px;color:#34113b;font:900 19px 'Barlow Condensed';letter-spacing:.18em;transform:rotate(-10deg)}
+.dashboard{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:13px;margin:19px 0}.stat{border:1px solid #51405f;border-radius:17px;background:#191229;padding:19px;min-height:118px;position:relative;overflow:hidden}.stat.primary{background:linear-gradient(110deg,#381d4b,#21112d);border-color:#8c4b7c}.stat .label{font-weight:700;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#c4b2ce}.stat .value{font:900 43px/.98 'Barlow Condensed',Impact,sans-serif;margin:12px 0 4px}.stat .value span{font-size:23px;color:#a890ac}.stat.primary .value{color:var(--lemon)}.stat .small{color:#a994b7;font-size:11px}.stat .scribble{position:absolute;right:-10px;top:4px;color:#7e4b86;font-size:64px;opacity:.35;transform:rotate(-10deg)}.meter{height:11px;border-radius:99px;overflow:hidden;background:#543b5e;margin-top:13px}.meter-fill{width:0%;height:100%;background:linear-gradient(90deg,var(--rose),var(--lemon));transition:width .2s}.progressline{display:flex;justify-content:space-between;margin-top:7px;color:#d6bdd9;font-size:11px}
+.layout{display:grid;grid-template-columns:290px minmax(0,1fr);gap:18px;align-items:start;margin-top:20px}.side{position:sticky;top:18px}.pane,.content{background:#161024;border:1px solid #483750;border-radius:19px;padding:20px;margin-bottom:15px}.pane h2,.content h2{font:800 25px/1.1 'Barlow Condensed';letter-spacing:.015em;margin:0 0 12px;text-transform:uppercase}.pane h2 span{color:var(--rose)}.hint{font-size:12px;color:#c8b5ce;line-height:1.65;margin:8px 0 15px}.tiny{font-size:11px;color:#ac92b5;line-height:1.6}.upload{display:block;padding:12px;background:#21192f;border:1px dashed #906187;border-radius:12px;margin:10px 0;font-size:12px;font-weight:800;color:#f2dbf6}.upload input{display:block;font-size:11px;max-width:100%;width:100%;margin:9px 0 0;color:#d5c4dc}.upload input::file-selector-button{background:var(--rose);color:#201126;border:0;border-radius:7px;padding:8px;font-weight:900;margin-right:7px;cursor:pointer}.formlab{font-weight:700;font-size:11px;color:#d0b9d4;display:block;margin:9px 0 5px;text-transform:uppercase;letter-spacing:.05em}.select,.search{width:100%;background:#241933;border:1px solid #634567;border-radius:10px;padding:12px 13px;color:#fff2fd;min-width:0}.btn{border-radius:10px;background:var(--lemon);border:1px solid #ffe76c;color:#2c102e;padding:11px 14px;font-weight:900;font-size:12px;transition:transform .12s,filter .12s}.btn:hover{filter:brightness(1.07);transform:translateY(-1px)}.btn.secondary{background:#352043;color:#f4dbf0;border-color:#7d557e}.btn.line{background:transparent;color:var(--lemon);border-color:#76604b}.btn.full{display:block;width:100%;margin-top:10px}.alert{font-size:12px;line-height:1.6;color:#eedcf1;background:#251c36;border-left:3px solid #ef8cbb;border-radius:7px;padding:10px 12px;margin-top:10px}.alert.good{border-color:var(--mint)}.alert.bad{border-color:var(--lemon)}
+.content{padding:22px 22px 16px;min-height:480px}.section-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}.section-head h2{font-size:31px}.section-head p{margin:0;color:#c4b0ca;font-size:12px;line-height:1.5}.subdivider{height:2px;margin:19px 0;background:linear-gradient(90deg,var(--rose),#ffdc6f 45%,transparent 94%)}.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0}.tab{color:#d9c0dc;border:1px solid #6d4e69;background:#23172f;font-size:12px;font-weight:800;padding:9px 15px;border-radius:100px}.tab[aria-selected=true]{color:#221024;background:var(--lemon);border-color:var(--lemon)}.toolbar{display:grid;grid-template-columns:minmax(210px,1fr) minmax(175px,220px) minmax(160px,190px);gap:9px;margin:8px 0 15px}.line-count{font-size:12px;color:#ceb7d7;margin:11px 0}.list{display:grid;gap:10px}.item{display:grid;grid-template-columns:minmax(0,1fr) minmax(225px,.9fr);gap:0;background:#21192f;border:1px solid #49364d;border-radius:14px;overflow:hidden}.item:hover{border-color:#b264a1}.item-main{padding:16px 17px}.item-title{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px}.state{font-weight:800;border-radius:999px;padding:5px 9px;font-size:10px;display:inline-flex;gap:4px;align-items:center}.state.yes{color:#a6ffe1;background:#1e5145}.state.no{color:#ffdaef;background:#65314f}.state.new{color:#322310;background:var(--lemon)}.idbadge{color:#bfa3c4;font-size:11px;font-weight:800}.charbadge{background:#382445;color:#e9b6db;border:1px solid #715075;font-size:10px;padding:4px 8px;border-radius:50px;font-weight:800}.quote{font-weight:800;font-size:14px;line-height:1.45;margin:5px 0 9px;color:#fff6ff}.code{font-size:10px;color:#aa93b7;white-space:normal;overflow-wrap:anywhere}.item-guide{padding:14px 15px;background:#2b2138;border-left:2px solid #7c4d7b}.guidehead{font-size:10px;letter-spacing:.09em;text-transform:uppercase;font-weight:900;color:var(--lemon);display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:7px}.guidehead .confidence{color:#f2c5e1;font-weight:700;font-size:10px;letter-spacing:0;text-transform:none}.guide-text{font-size:12px;line-height:1.65;color:#f4deec}.guide-extra{font-size:11px;color:#c4aecd;margin-top:7px;line-height:1.55}.empty{border:1px dashed #72526d;border-radius:12px;color:#e6cce3;text-align:center;padding:45px 15px;background:#241a33}.empty strong{display:block;font:800 24px 'Barlow Condensed';margin-bottom:8px}.foot{color:#aa94b4;font-size:11px;line-height:1.7;padding:16px 0}.foot strong{color:#ecd4e8}.loading{display:inline-flex;gap:8px;align-items:center}.loading::before{content:'◌';font-size:18px;animation:rot 1s infinite linear}@keyframes rot{to{transform:rotate(360deg)}}
+@media(min-width:1100px){.hero-copy{padding-left:50px}.side{top:18px}}
+@media(max-width:950px){.layout{grid-template-columns:1fr}.side{position:static;display:grid;grid-template-columns:1fr 1fr;gap:12px}.side .pane{margin:0}.dashboard{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.shell{padding:0 12px 45px}.topbar{padding:13px 0}.brand small{font-size:10px}.microchip{font-size:9px}.hero{grid-template-columns:1fr;min-height:250px;margin-top:12px}.hero-copy{padding:26px 22px}.hero h1{font-size:65px}.hero p{font-size:12px;padding-right:85px}.hero-mark{position:absolute;right:-90px;top:10px;width:225px;height:240px;opacity:.46;pointer-events:none}.rise-txt{font-size:130px}.disc{height:190px;width:190px}.hero-ribbon{display:none}.dashboard{gap:8px}.stat{padding:12px;min-height:95px}.stat .value{font-size:34px}.stat .small{display:none}.stat .scribble{display:none}.stat .label{font-size:9px}.side{grid-template-columns:1fr}.pane{padding:17px}.content{padding:15px 12px}.toolbar{grid-template-columns:1fr}.item{grid-template-columns:1fr}.item-guide{border-left:0;border-top:2px solid #69476b}.item-main{padding:12px 13px}.hero-copy .eyebrow{font-size:10px}.content h2{font-size:26px}}
+
+.character-strip{border:1px solid #83547c;border-radius:14px;background:linear-gradient(100deg,#30203f,#21172f);padding:14px;margin:8px 0 12px}.strip-title{font-size:11px;font-weight:900;letter-spacing:.1em;color:var(--lemon);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}.strip-clear{background:none;border:0;color:#edd4ed;text-decoration:underline;font-size:11px;font-weight:700;cursor:pointer}.character-quick{display:flex;gap:7px;flex-wrap:wrap}.quickchar{background:#271b36;border:1px solid #7f597e;color:#f6e6f5;border-radius:30px;padding:8px 11px;font-weight:800;font-size:12px}.quickchar.active,.quickchar[aria-pressed=true]{color:#29112e;background:var(--lemon);border-color:var(--lemon)}.quickchar small{font-size:10px;color:inherit;opacity:.77;margin-left:5px}.special-toggle{display:flex;align-items:center;gap:9px;color:#cab5ce;font-size:11px;margin:12px 0}.special-toggle input{accent-color:var(--rose);width:16px;height:16px}.guide-note{border-radius:9px;padding:9px 12px;margin:7px 0 12px;background:#382544;border-left:3px solid var(--lemon);color:#f1ddec;font-size:11px;line-height:1.55}.confidence.guide{color:#8bf6c9!important}.confidence.estimada{color:#ffe090!important}.confidence.incerta{color:#ffc7dc!important}.item.internal{border-style:dashed;opacity:.78}.item.special{border-color:#a56d4c}.item .note-special{margin-top:7px;color:#f7cc85;font-size:10px;line-height:1.4}.sourceguide{color:#d7b6ce;font-size:10px;margin-top:4px}
+
+/* Community edition additions */
+:root{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}
+.hero h1,.rise-txt,.hero-ribbon,.stat .value,.pane h2,.content h2,.empty strong{font-family:Impact,'Arial Narrow',sans-serif}
+.stat .value {font-feature-settings:'tnum'}
+.no-save{padding:46px 20px;text-align:center;border:1px dashed #9c6598;background:linear-gradient(120deg,#281635,#1a142a);border-radius:17px;margin:18px 0}
+.no-save .big{font-size:42px;line-height:1}.no-save h3{font:900 30px Impact,'Arial Narrow',sans-serif;margin:15px 0 9px;letter-spacing:.02em}
+.no-save p{max-width:530px;margin:0 auto;color:#d6bad8;font-size:13px;line-height:1.75}
+.guide-note{margin:10px 0;padding:12px;border:1px solid #614569;border-radius:10px;color:#f0ddec;background:#261b34;font-size:12px;line-height:1.6}
+.step-row{display:flex;align-items:flex-start;gap:10px;margin:12px 0}
+.step-digit{display:grid;place-items:center;min-width:27px;height:27px;border-radius:8px;background:#ffd95b;color:#23142d;font-size:12px;font-weight:900}
+.step-row p{margin:0;font-size:12px;color:#dfc8e2;line-height:1.65}
+.step-row p strong{color:#fff9ff}
+.path{display:block;word-break:break-all;background:#120d21;padding:10px;margin:8px 0;border:1px solid #695075;border-radius:8px;font-size:11px;color:#ffeba1}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}
+.quickchar{background:#2b1b3b;color:#f9d7ed;border:1px solid #604664;padding:8px 11px;border-radius:9px;font-size:12px;font-weight:800}
+.quickchar small{display:inline-grid;place-items:center;background:#533652;border-radius:99px;padding:2px 6px;margin-left:6px;font-size:10px;color:#fff}
+.quickchar.active{background:#ffe76c;border-color:#ffe76c;color:#381836}.quickchar.active small{background:#5c3453;color:#fff}
+#export:disabled,#more:disabled{opacity:.4}
+#saveStatus{white-space:normal;overflow-wrap:anywhere}
+.notice{font-size:12px;line-height:1.7;background:#24182f;padding:11px 12px;border:1px solid #695177;border-radius:10px;color:#e9d4e9;margin-top:12px}
+.help{background:#171127;border:1px solid #483750;border-radius:19px;padding:21px 25px;margin:23px 0}
+.help h2{font:900 28px Impact,'Arial Narrow',sans-serif;margin:0 0 12px}
+.help summary{cursor:pointer;font-size:13px;font-weight:800;padding:9px 0}
+.help p{color:#d3bed6;font-size:12px;line-height:1.65;margin:3px 0 10px}
+.line-count{font-variant-numeric:tabular-nums}
+.copyr{color:#a98da9;font-size:11px}
+.special-toggle{display:flex;align-items:flex-start;gap:8px;padding:10px 0;font-size:12px;color:#d7beda}
+.special-toggle input{accent-color:#fa55b7;margin-top:3px}
+.note-special{margin-top:9px;background:#5c3544;border-radius:6px;color:#ffd1d6;padding:7px;font-size:11px}
+.confidence{white-space:nowrap}
+@media(max-width:650px){.hero h1{font-size:61px}.hero-copy{padding:24px}.hero-mark{min-height:100px}.hero{grid-template-columns:1fr}.hero-mark{display:none}.dashboard{grid-template-columns:repeat(2,minmax(0,1fr))}.stat{min-height:100px;padding:13px}.stat .value{font-size:35px}.toolbar{grid-template-columns:1fr}.item{grid-template-columns:1fr}.item-guide{border-left:0;border-top:2px solid #7c4d7b}.side{grid-template-columns:1fr;display:block}.side .pane{margin-bottom:12px}.content{padding:16px}}
+</style></head>
+<body><div class="shell">
+<header class="topbar"><div class="brand"><div class="brand-star">★</div><div>RISE TRACKER<small>Community Edition · v1.0</small></div></div><span class="microchip">OFFLINE READY · NO ACCOUNT</span></header><div class="navline"></div>
+<section class="hero"><div class="hero-copy"><div class="eyebrow">Hardcore Risette Fan</div><h1>RISE <em>TRACKER</em></h1><p>Descubra quais comentários de batalha já foram registrados no seu Persona 4 Golden. Sem Cheat Engine, sem conta e sem alterar o save.</p><a href="#comecar" class="btn" style="display:inline-block;text-decoration:none">COMEÇAR ✦</a></div><div class="hero-mark" aria-hidden="true"><div class="halo"></div><div class="disc"></div><div class="starshape">✦</div><div class="rise-txt">RISE</div><div class="hero-ribbon">YOUR NAVIGATOR</div></div></section>
+<section class="dashboard" aria-label="Resumo do progresso"><article class="stat primary"><div class="label">Progresso</div><div class="value" id="num">— <span>/ 250</span></div><div class="meter"><div class="meter-fill" id="fill"></div></div><div class="progressline"><span id="percent">Carregue um save</span><span>250 falas</span></div></article><article class="stat"><div class="label">Restantes</div><div class="value" id="remain">—</div><div class="small">Até a conquista</div></article><article class="stat"><div class="label">Flags registradas</div><div class="value" id="flags">—</div><div class="small">Lidas no seu arquivo</div></article><article class="stat"><div class="label">Novas no comparativo</div><div class="value" id="newCount">—</div><div class="small">É opcional comparar</div></article></section>
+<div class="layout" id="comecar"><aside class="side">
+<section class="pane"><h2>01 / <span>SEU SAVE</span></h2><p class="hint">Escolha o arquivo <code>data0001.bin</code> (ou outro slot) do P4G para PC. Ele é lido somente neste navegador. Nenhum save vem pré-carregado.</p>
+<label class="upload" for="fileNow">✦ SAVE ATUAL (OBRIGATÓRIO)<input id="fileNow" type="file" accept=".bin,application/octet-stream" aria-label="Abrir save atual"></label>
+<label class="upload" for="filePrev">SAVE ANTERIOR, MESMA CAMPANHA (OPCIONAL)<input id="filePrev" type="file" accept=".bin,application/octet-stream" aria-label="Abrir save anterior"></label>
+<button class="btn line full" type="button" id="clearSaves">LIMPAR SAVES DESTA PÁGINA</button><div class="alert" id="saveStatus" role="status">Abra um arquivo de save para ver seu progresso.</div>
+<div class="guide-note">🔒 <b>Privacidade:</b> o arquivo é analisado localmente e não é enviado para nenhum servidor. Fechar a página apaga os saves da sessão.</div></section>
+<section class="pane"><h2>02 / <span>TEXTOS DAS FALAS</span></h2><p class="hint">O mapa das 625 flags já está incluído. Para mostrar os <strong>textos originais</strong>, a página tenta carregar a lista pública <code>rise.tsv</code> do autor da tabela do Cheat Engine.</p>
+<button id="load" class="btn full" type="button">CARREGAR TEXTOS AUTOMATICAMENTE ↻</button>
+<label class="upload" for="tsv">OU IMPORTAR <code>rise.tsv</code><input id="tsv" type="file" accept=".tsv,.txt,text/plain,text/tab-separated-values"></label><div id="mapStatus" class="alert" role="status">As condições e os IDs funcionam mesmo sem internet.</div><p class="tiny">Se não carregar, baixe <a href="https://github.com/zarroboogs/p4g-ct/blob/master/data/rise.tsv" target="_blank" rel="noopener noreferrer">rise.tsv no GitHub</a> e importe acima.</p></section>
+<section class="pane"><h2>03 / <span>EXPORTAR</span></h2><p class="hint">Salve uma lista CSV das falas filtradas para consultar fora do navegador.</p><button id="export" class="btn secondary full" type="button" disabled>BAIXAR RESULTADOS .CSV ↓</button><div class="notice">Compatibilidade verificada em saves <b>PC/Steam</b> de 217.937 bytes. Outros formatos ainda não foram testados.</div></section>
+</aside>
+<main class="content"><div class="section-head"><div><div class="eyebrow">Navigator Files</div><h2>FALAS DA RISE</h2><p>Selecione um personagem e veja suas falas faltantes e como tentar consegui-las.</p></div><span class="microchip" id="sourceLabel">NENHUM SAVE</span></div><div class="subdivider"></div>
+<section class="no-save" id="emptyState" aria-live="polite"><div class="big">✦</div><h3>PRIMEIRO, ESCOLHA O SEU SAVE!</h3><p>Na seção <b>SEU SAVE</b>, abra um arquivo <code>data000X.bin</code>. O progresso e os filtros aparecerão aqui, sem carregar dados de outro jogador.</p></section>
+<div id="trackerArea" hidden><div class="tabs" role="tablist" aria-label="Filtrar por status"><button class="tab" role="tab" data-tab="missing" aria-selected="true">○ Faltantes</button><button class="tab" role="tab" data-tab="all" aria-selected="false">Todas</button><button class="tab" role="tab" data-tab="got" aria-selected="false">✓ Registradas</button><button class="tab" role="tab" data-tab="new" aria-selected="false" id="tabNew" disabled>★ Novas</button></div>
+<div class="toolbar"><input class="search" id="query" type="search" placeholder="Buscar por fala, evento, nome ou ID…" aria-label="Pesquisar falas"><select class="select" id="character" aria-label="Filtrar por personagem"><option value="all">Todos os personagens</option><option>Protagonista</option><option>Yosuke</option><option>Chie</option><option>Yukiko</option><option>Kanji</option><option>Naoto</option><option>Teddie</option><option>Geral</option></select><select class="select" id="category" aria-label="Filtrar por situação"><option value="all">Todas as situações</option></select></div>
+<div class="guide-note">✦ <b>Atalho:</b> clique em um personagem para ver automaticamente apenas as falas faltantes dele.</div><div class="chips" id="characterQuick"></div>
+<label class="special-toggle"><input id="includeSpecial" type="checkbox"> Mostrar códigos internos, chefes e falas de contagem incerta</label><div id="lineCount" class="line-count"></div><div class="list" id="list"></div><div class="line-count" id="moreText"></div><button class="btn secondary full" id="more" style="display:none" type="button">MOSTRAR MAIS FALAS ↓</button></div></main></div>
+<section class="help" id="ajuda"><h2>COMO USAR · 3 PASSOS</h2><div class="step-row"><div class="step-digit">1</div><p><strong>Encontre seus saves na Steam.</strong> Abra a pasta <code>userdata</code> dentro da instalação do Steam, depois <code>SEU_ID\1113000\remote</code>. O nome varia pelo slot: <code>data0001.bin</code>, <code>data0002.bin</code> etc.</p></div><span class="path">[Pasta da Steam]\userdata\[Seu ID]\1113000\remote\data0001.bin</span><div class="step-row"><div class="step-digit">2</div><p><strong>Escolha o arquivo no navegador.</strong> O tracker lê os dados sem alterar o jogo. Se tiver um save antigo <b>da mesma campanha</b>, você pode compará-lo (opcional).</p></div><div class="step-row"><div class="step-digit">3</div><p><strong>Use “Faltantes” e filtre por personagem.</strong> Cada cartão mostra uma orientação; algumas condições vêm do guia e outras são estimativas — observe a etiqueta de confiança.</p></div>
+<details><summary>Por que algumas entradas não aparecem?</summary><p>Entradas internas sem diálogo conhecido e falas especiais/chefes ficam ocultas por padrão. Você pode exibi-las no filtro acima depois de carregar um save. Algumas podem não contar para a conquista.</p></details>
+<details><summary>O que significa 256+ falas e contador diferente?</summary><p>O contador do jogo usa um byte e volta a zero depois de 255. O tracker usa a soma das flags da região mapeada; assim pode continuar indicando o total mesmo quando o contador já deu a volta.</p></details>
+<details><summary>Preciso instalar o Cheat Engine ou enviar meu arquivo?</summary><p>Não. Basta abrir este HTML no navegador e selecionar uma cópia do save. A única conexão externa opcional é para buscar a lista pública de nomes das falas no GitHub; o save nunca é enviado.</p></details>
+</section><footer class="foot"><b>Rise Tracker Community Edition</b> · projeto comunitário não oficial, feito para fins de acompanhamento. Não modifica saves. Condições de fala podem ser aproximadas e a elegibilidade de certos diálogos para o troféu não é garantida. Referências: <a href="https://github.com/zarroboogs/p4g-ct" target="_blank" rel="noopener noreferrer">mapeamento original</a> e <a href="https://gamefaqs.gamespot.com/xbox-series-x/370653-persona-4-golden/faqs/81937/hardcore-risette-fan" target="_blank" rel="noopener noreferrer">guia de Hardcore Risette Fan</a>.</footer>
+</div>
+<script>
+'use strict';
+const BASE=0x19164, COUNTER=0x19162, BYTES=240, EXPECTED_SIZE=217937;
+const PACKED='00000400800900a00c00d00g00h00k00l00o00p00s00t00w00x01001101401501801901c01d01g01h01k01l01o01p01s01t01w01x02002102402502802902c02d02g02h02k02l02o02p02s02t02w02x03003103403503803903c03d03g03h03k03l03o03p03s03t03w03x04004104404804c04g04k04o04s04w05005405805c05g05k05o05s05w06006406806c06g06k06o06s06w07007407807c07g07k07o07s07w08008408808c08g08k08o08s08w09009409809c09g09k09o09s09w0a00a40a80ac0ag0ak0ao0as0aw0b00b40b80bc0bg0bk0bo0bs0bw0c00c40c80cc0cg0ck0co0cs0cw0d00d40d80dc0dg0dk0do0ds0dw0e00e40e80ec0eg0ek0eo0ep0es0et0ew0ex0f00f10f40f50f80fc0fg0fk0fo0fs0fw0g00g40g80gc0gg0gk0go0gs0gw0h00h40h80hc0hg0hk0ho0hs0hw0i00i40i80ic0id0ig0ik0io0is0iw0j00j40j80jc0jg0jk0jo0js0jw0k00k40k80kc0kg0kk0ko0ks0kw0l00l40l80lc0lg0lk0lo0ls0lw0m00m40m80mc0mg0mk0mo0ms0mw0n00n10n40n50n80n90nc0nd0ng0nh0nk0nl0no0np0ns0nt0nw0nx0o00o10o40o50o80o90oc0od0og0oh0ok0ol0oo0op0os0ot0ow0ox0p00p10p40p50p80p90pc0pd0pg0ph0pk0pl0po0pp0ps0pt0pw0px0q00q10q40q50q80q90qc0qd0qg0qh0qk0ql0qo0qp0qs0qt0qw0qx0r00r10r40r50r80r90rc0rd0rg0rh0rk0rl0ro0rp0rs0rt0rw0rx0s00s10s20s40s80sc0sg0sk0so0ss0sw0t00t40t80tc0tg0tk0to0ts0tw0u00u40u80uc0ug0uk0uo0us0uw0v00v40v80v90va0vc0vd0ve0vg0vh0vi0vk0vl0vm0vo0vp0vq0vs0vt0vu0vw0vx0vy0w00w40w80wc0wg0wk0wo0ws0ww0x00x40x80xc0xg0xk0xo0xs0xw0y00y40y80yc0yg0yk0yo0ys0yw0z00z40z80zc0zg0zk0zo0zs0zw0zx0zy10010110210410510610810910a10c10d10e10g10h10i10k10l10m10o10p10q10s10t10u10w10x10y11011111211411511611811911a11c11d11e11g11k11o11s11w12012412812c12g12k12o12s12w13013413813c13g13k13o13p13q13s13w14014414814c14g14k14o14s14w15015415815915a15c15g15k15o15s15w16016416816c16g16k16o16s16t16u16w16x16y17017417817c17g17k17o17s17w18018418818c18g18k18o18s18w19019419819c19g19k19o19s19w1a01a41a81ac1ag1ah1ak1al1ao1ap1as1at1aw1ax1b01b11b41b81bc1bg1bk1bo1bs1bw1c01c41c81cc1cg1ck1co1cs1cw1d01d41d81dc1dg1dk1do1ds1dw1e01e41e81ec1eg1ek1eo1es1ew1f01f41f81fc1fg1fk1fo1fs1fw1g01g41g81gc1gg1gk1go1gs1gw1h01h41h8';
+const mapPositions=Array.from({length:625},(_,i)=>parseInt(PACKED.slice(i*3,i*3+3),36));
+const originalRows=mapPositions.map((p,id)=>({id,idx:id,byte:Math.floor(p/8),bit:p%8,d:'',name:`Fala #${String(id).padStart(3,'0')}`}));
+let lines=originalRows.map(r=>({...r}));
+let haveMap=false,now=null,prev=null,tab='missing',visible=36,rowsCache=[];
+const $=id=>document.getElementById(id);
+const escapeHTML=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const popcount=x=>{let n=0;while(x){n++;x&=x-1;}return n};
+function total(s){return s?s.flags.reduce((a,x)=>a+popcount(x),0):0;}
+function registered(row,save){return save?!!(save.flags[row.byte]&(1<<row.bit)):false;}
+function newBits(){return now&&prev?now.flags.reduce((a,x,i)=>a+popcount(x&(~prev.flags[i]&255)),0):0;}
+function readSave(buff,name){
+ if(!/\.bin$/i.test(name))throw Error('Selecione um arquivo de save com extensão .bin.');
+ const bytes=new Uint8Array(buff);
+ if(bytes.length!==EXPECTED_SIZE)throw Error(`Formato não compatível: ${bytes.length.toLocaleString('pt-BR')} bytes. Esta versão foi testada com saves Steam de 217.937 bytes; não tente usar arquivos de outra plataforma.`);
+ const flags=[...bytes.slice(BASE,BASE+BYTES)];
+ const count=bytes[COUNTER],sum=flags.reduce((a,x)=>a+popcount(x),0);
+ if(sum%256!==count)throw Error(`Este arquivo não passou na validação (contador ${count}, flags ${sum}). Talvez seja um formato diferente ou o arquivo esteja incompleto.`);
+ return {count,flags,label:name,estimated:sum};
+}
+const PARTY=['Protagonista','Yosuke','Chie','Yukiko','Kanji','Naoto','Teddie'];
+const PLACEHOLDER_IDS=new Set([491,492,493,494,495,496,507,508,509,510,511,512,547,556,594,595,596,597,598,599,600,601,602,603,604,605,606,607,608,609,611,612,613,614]);
+function character(r){const n=String(r.name||'').toLowerCase(),id=r.id;
+if(/yosuke/.test(n))return 'Yosuke';if(/chie/.test(n))return 'Chie';if(/yukiko/.test(n))return 'Yukiko';if(/kanji/.test(n))return 'Kanji';if(/naoto/.test(n))return 'Naoto';if(/teddie/.test(n))return 'Teddie';
+if(/\bsenpai\b|\byu\b|your persona|your health|you rule/.test(n))return 'Protagonista';
+// Ordem dos personagens na tabela, quando a fala não contém o nome.
+const cyc=(start,end)=>id>=start&&id<=end?PARTY[(id-start)%7]:null;
+for(const [a,b] of [[81,87],[89,95],[97,103],[105,111],[113,119],[140,146],[147,153],[154,160],[161,167],[342,348],[349,355],[356,362],[363,369],[391,397],[398,404],[405,411],[412,418],[419,425],[468,474],[475,481]]){const ch=cyc(a,b);if(ch)return ch;}
+// Algumas falas genéricas não citam o personagem no texto: o grupo vem do ID original.
+for(const [start,end] of [[370,390],[426,446],[447,467]])if(id>=start&&id<=end)return PARTY[Math.floor((id-start)/3)];
+if(id>=132&&id<=137)return PARTY[id-131];
+if(id===637)return 'Protagonista';if(id>=638&&id<=643)return PARTY[id-636];
+return 'Geral';}
+function element(text){const n=text.toLowerCase();if(/physical/.test(n))return 'físicos';if(/electric|zap|lightning/.test(n))return 'elétricos';if(/darkness|dark attacks/.test(n))return 'de escuridão';if(/\blight\b/.test(n))return 'de luz';if(/\bfire\b/.test(n))return 'de fogo';if(/\bice\b/.test(n))return 'de gelo';if(/\bwind\b/.test(n))return 'de vento';return 'elementais';}
+function label(c){return c==='Geral'?'grupo':c==='Protagonista'?'protagonista':c;}
+const identified=(category,guide,detail='',confidence='Guia',kind='regular')=>({category,guide,detail,confidence,kind});
+function isPlaceholder(r){return PLACEHOLDER_IDS.has(r.id)||/^(?:h105_\d+_\d+|bt[l_].*)$/i.test(String(r.name||'').trim())||!String(r.name||'').trim();}
+function how(r){const id=r.id,actor=character(r),who=label(actor),e=element(r.name),n=String(r.name||'').toLowerCase();
+const g=(c,t,d='',confidence='Guia',kind='regular')=>identified(c,t,d,confidence,kind);
+if(isPlaceholder(r))return g('Código interno','A tabela original não identifica texto de diálogo para este código.','Não há gatilho confiável; ocultado da lista de farm.', 'Não identificada','internal');
+if(id===0)return g('Inimigo especial','Encontre o Reaper e inicie a luta.','É um encontro especial; não vale a pena usá-lo como método principal de farm.');
+if(id===1)return g('Inimigo raro','Comece uma luta contra uma Golden Hand (mão dourada).');
+if(id>=2&&id<=4)return g('Inimigo forte','Inicie uma batalha contra uma Shadow considerada forte para o nível do grupo.','O comentário pode ser substituído pelo Weakness Scan após o Social Link 2 da Rise.');
+if(id>=5&&id<=14)return g('Abertura neutra',`Entre em uma batalha neutra contra ${Math.floor((id-5)/2)+1} inimigo(s).`,'Não acerte nem seja acertado por trás ao iniciar o combate. Depois do Social Link 2, essas falas ficam raras.');
+if(id>=15&&id<=24)return g('Abertura com vantagem',`Inicie a luta com vantagem contra ${Math.floor((id-15)/2)+1} inimigo(s).`,'Ataque a Shadow pelas costas. O Weakness Scan pode substituir a fala após o Rank 2.');
+if(id>=25&&id<=34)return g('Emboscada',`Seja emboscado por ${Math.floor((id-25)/2)+1} inimigo(s).`,'Deixe a Shadow surpreender teu grupo por trás. O Weakness Scan pode impedir o comentário desejado.');
+if(id>=35&&id<=44)return g('Reforços',`Deixe um inimigo chamar ${Math.floor((id-35)/2)+1} reforço(s) durante a batalha.`,'É diferente de simplesmente encontrar esse número de inimigos no começo.');
+if(id>=45&&id<=58)return g('Imunidade no início',`Inicie uma batalha contra uma Shadow imune a ataques ${e}.`,'A fala precisa aparecer na batalha com caixa de texto; a tela de Analysis não conta. Depende do Weakness Scan da Rise (SL 2).');
+if(id>=59&&id<=72)return g('Fraqueza no início',`Inicie uma batalha contra uma Shadow fraca a ataques ${e}.`,'Procure a fala de abertura com caixa de texto, fora da tela de Analysis. Requer Weakness Scan (SL 2).');
+if(id>=73&&id<=79)return g('Aliado incapacitado',`Deixe ${who} ficar incapacitado (HP chegar a zero) durante o combate.`,'A fala só pode aparecer enquanto a batalha continua.','Guia');
+if(id>=80&&id<=87)return g('HP baixo',`Deixe ${who} ficar abaixo da metade da vida em batalha.`,'Evite curar imediatamente, para dar oportunidade ao comentário da Rise.','Estimativa');
+if(id>=88&&id<=95)return g('Derrubado pelo inimigo',`Deixe ${who} ser derrubado por um ataque inimigo.`,'Pode exigir que o ataque acerte uma fraqueza do personagem.');
+if(id>=96&&id<=103)return g('Tontura / Dizzy',`Deixe ${who} sofrer Dizzy e espere a Rise comentar.`,'Não confunda Dizzy com Knock Down.');
+if(id>=104&&id<=111)return g('Dano recebido',`Deixe ${who} sofrer um ataque perigoso e espere a reação da Rise.`,'O contexto exato desta variação não está claro na tabela.','Estimativa');
+if(id>=112&&id<=119)return g('Esquiva',`Faça ${who} esquivar de um ataque inimigo.`,'Esquivar é diferente de errar um ataque próprio.');
+if(id>=120&&id<=123)return g('Inimigo fugindo','Deixe uma Shadow fugir da batalha.','Aplicar Fear ao inimigo pode facilitar a fuga.');
+if(id===124)return g('Golden Hand fugindo','Encontre duas ou mais Golden Hands e deixe uma escapar.');
+if(id>=125&&id<=128)return g('Invocação de inimigo','Espere uma Shadow chamar ajuda ou convocar outro inimigo.');
+if(id===129)return g('Inimigo se levantou','Derrube uma Shadow e deixe-a se levantar em um turno posterior.');
+if(id===130)return g('Inimigo se curando','Enfrente uma Shadow que use uma habilidade de recuperação de HP.','É uma condição descrita pelo texto, sem confirmação específica no guia.','Estimativa');
+if(id===131||id===245)return g('Fuga bem-sucedida','Use Escape e aguarde até conseguir escapar.','A Rise pode comentar quando surgir uma oportunidade.');
+if(id>=132&&id<=137)return g('Aliado retornou',`Faça ${who} se recuperar de uma incapacidade e voltar à luta.`,'A origem exata do comentário pode variar.','Estimativa');
+if(id===138||id===248)return g('Fuga impedida','Tente fugir de uma batalha na qual não seja possível escapar ou a tentativa falhe.','Chefes geralmente impedem a fuga.');
+if(id===139||id===246||id===247)return g('Tentativa de fuga','Use o comando Escape mais de uma vez enquanto a Rise procura uma oportunidade.');
+if(id>=140&&id<=146)return g('Derrubado / Dizzy',`Deixe ${who} cair e não se recuperar imediatamente.`,'A tabela associa essas falas à dificuldade para se levantar.','Estimativa');
+if(id>=147&&id<=153)return g('Ataque reduzido',`Deixe o ataque de ${who} cair (por exemplo, Tarunda).`,'Precisa ser redução aplicada ao aliado, não a um inimigo.');
+if(id>=154&&id<=160)return g('Defesa reduzida',`Deixe a defesa de ${who} cair (por exemplo, Rakunda).`);
+if(id>=161&&id<=167)return g('Agilidade reduzida',`Deixe a agilidade de ${who} cair (por exemplo, Sukunda).`);
+if(id>=168&&id<=177)return g('Inimigos restantes',`Deixe exatamente ${5-Math.floor((id-168)/2)} inimigo(s) ainda ativo(s) na batalha.`,'Derrote alguns, sem encerrar o combate.');
+if(id>=178&&id<=185)return g('HP baixo',id===178?'Deixe dois ou mais integrantes do grupo com menos de 50% do HP.':`Deixe ${who} com menos de 50% do HP durante a luta.`,'Espere o aviso da Rise antes de curar.');
+const states={186:['Pânico','Panic'],187:['Envenenamento','Poison'],188:['Medo','Fear'],189:['Fúria','Rage'],190:['Queda','Knock Down'],191:['Exaustão','Exhaustion'],192:['Enervation','Enervation'],193:['Persona selada','Silence / Seal']};
+if(states[id])return g(states[id][0],`Faça o protagonista sofrer ${states[id][1]} durante uma batalha.`,'Apenas a condição do protagonista, não a dos outros membros.');
+if(id===194)return g('Levantar após queda','Deixe o protagonista se levantar após ser derrubado.');
+for(const [a,b,c,v] of [[195,200,'Pânico','Panic'],[201,207,'Envenenamento','Poison'],[208,213,'Medo','Fear'],[214,219,'Fúria','Rage'],[220,225,'Tontura','Dizzy'],[226,231,'Exaustão','Exhaustion'],[232,237,'Enervation','Enervation'],[238,243,'Persona selada','Silence / Seal']])if(id>=a&&id<=b)return g(c,`Faça ${who} sofrer ${v} durante a luta.`,'Espere a Rise anunciar o estado antes de curá-lo.');
+if(id===244)return g('Fuga','Use o comando de fuga durante o combate.','Fala breve cujo gatilho é menos específico.','Estimativa');
+if(id>=249&&id<=278)return g('Inimigo forte',`Inicie uma batalha contra uma Shadow forte que tenha a característica elemental indicada na frase (${e}).`,'O texto indica uma fraqueza ou imunidade adicional; o inimigo também deve ser forte.','Estimativa');
+if(id>=279&&id<=308)return g('Inimigo fraco',`Inicie uma batalha contra uma Shadow fraca para teu grupo${id>=281?' e com a fraqueza/imunidade elemental indicada na fala':''}.`,'“Weak enemy” aqui é força relativa ao grupo, não apenas fraqueza elemental.','Estimativa');
+if(id>=309&&id<=338)return g('Inimigo muito fraco',`Inicie uma batalha contra uma Shadow bem abaixo do nível do grupo${id>=311?' que tenha a propriedade elemental indicada':''}.`,'É difícil obter a fala exata após o Weakness Scan.','Estimativa');
+if(id>=339&&id<=341)return g('Comando Rush',id===341?'Mantenha o Rush ativo em turnos consecutivos.':'Ative o modo Rush durante o combate.');
+if(id>=342&&id<=348)return g('Derrotar o grupo inteiro',`Faça ${who} eliminar todos os inimigos restantes com uma ação.`,'Derrotar é zerar o HP, não apenas derrubar.');
+for(const [a,b,nm] of [[349,355,4],[356,362,3],[363,369,2],[370,390,1]])if(id>=a&&id<=b)return g('Inimigos derrotados',`Faça ${who} derrotar ${nm} inimigo(s) em uma única ação.`,'A fala exige derrotas (HP zerado), não apenas Knock Down.');
+if(id>=391&&id<=397)return g('Esquiva',`Faça ${who} se esquivar de um ataque de uma Shadow.`);
+for(const [a,b,nm] of [[398,404,4],[405,411,3],[412,418,2],[419,425,1]])if(id>=a&&id<=b)return g('Inimigos derrubados',`Faça ${who} derrubar ${nm} inimigo(s) em uma ação (Knock Down).`,'Acertar a fraqueza ou crítico pode derrubar, sem precisar matar.');
+if(id>=426&&id<=446)return g('Acertar fraqueza',`Faça ${who} acertar a fraqueza de um inimigo.`,'Use uma habilidade do elemento ao qual a Shadow é vulnerável.');
+if(id>=447&&id<=467)return g('Crítico / golpe forte',`Faça ${who} conseguir um acerto crítico físico ou um golpe de destaque.`,'Esta família mistura variações de golpes e críticas; o gatilho específico pode variar.','Estimativa');
+if(id>=468&&id<=474)return g('Ataque errou',`Faça ${who} errar um ataque.`,'O ataque do personagem deve falhar; não é a mesma coisa que esquivar.');
+if(id>=475&&id<=481)return g('Derrubado',`Deixe ${who} cair após falhar ou receber um ataque.`,'A tabela não distingue perfeitamente as situações para esta variação.','Estimativa');
+if(id>=482&&id<=487)return g('Medo e fuga',`Faça ${who} sofrer Fear e tentar fugir por conta própria.`,'A fuga precisa acontecer pelo estado de medo, não pelo comando Escape.');
+if(id>=488&&id<=490)return g('Protagonista incapacitado','Deixe o protagonista cair inconsciente em batalha.','O guia aponta Rank 10 do Social Link da Rise para estas variações.');
+if(id>=491&&id<=503)return g('Evento especial','Fala ligada a uma condição rara ou evento de derrota.','Não há método geral confiável de farm; não priorize para as 250.','Incerta','special');
+if(id>=504&&id<=506)return g('Vitória','Vença uma batalha e espere o comentário da Rise.','Há relatos conflitantes sobre falas sem caixa de texto ou pós-combate.','Incerta','special');
+if(id>=507&&id<=519)return g('Evento de história','Fala ligada a uma batalha ou evento roteirizado.','Não há confirmação de que conte para Hardcore Risette Fan.','Incerta','special');
+if(id>=520&&id<=525)return g('Subir de nível',`Faça ${who} subir de nível ao fim de uma batalha.`,'Como é pós-combate, não conte com ela para a conquista.','Incerta','special');
+if(id>=526&&id<=539)return g('Chefe / história','Fala vinculada a um chefe ou evento específico da história.','Algumas são automáticas e a elegibilidade para o troféu é debatida.','Incerta','special');
+if(id>=540&&id<=548)return g('Chefe de Void Quest','Enfrente o chefe de Void Quest e espere o evento da carapaça/forma verdadeira.','Fala exclusiva de chefe; contagem no troféu é incerta.','Incerta','special');
+if(id>=549&&id<=568)return g('Chefe de Heaven',id>=557?`Durante a luta contra o chefe de Heaven, deixe ${who} ser controlado.`:'Espere o evento particular do chefe de Heaven.','Fala exclusiva de chefe; contagem no troféu é incerta.','Incerta','special');
+if(id>=569&&id<=572)return g('Quad Converge','Durante o chefe de Heaven, espere Quad Converge reforçar o elemento mencionado.','É um evento específico de chefe e pode não contar para a conquista.','Incerta','special');
+if(id>=573&&id<=620)return g('Chefe / batalha de história','Prossiga na batalha de chefe ou evento roteirizado correspondente à frase.','Não há gatilho repetível nem contagem confirmada para a conquista.','Incerta','special');
+if(id>=621&&id<=624)return g('Comentário genérico',id===621?'Derrote quatro inimigos em uma única ação.':id===622?'Derrote três inimigos em uma ação.':id===623?'Derrote dois inimigos em uma ação.':'Faça uma ação positiva de combate.','Condição inferida pelo texto, mas não confirmada para a conquista.','Incerta','special');
+return g('Condição desconhecida','O gatilho desta entrada não foi identificado com segurança.','Evite priorizar até haver uma fonte adicional.','Incerta','special');}
+
+function loadTSV(text){
+ const rows=text.replace(/^\uFEFF/,'').split(/\r?\n/).map(x=>x.trimEnd()).filter(Boolean);
+ const cols=rows[0].split('\t').map(x=>x.trim().toLowerCase());
+ for(const key of ['id','byte','bit','name'])if(!cols.includes(key))throw Error('O TSV não contém a coluna '+key+'.');
+ const found=new Map();
+ for(const ln of rows.slice(1)){
+  const cells=ln.split('\t'); const o=Object.fromEntries(cols.map((k,i)=>[k,cells[i]??'']));
+  const id=Number(o.id),byte=Number(o.byte),bit=Number(o.bit);
+  if(!Number.isInteger(id)||id<0||id>=625)continue;
+  if(!Number.isInteger(byte)||!Number.isInteger(bit)||byte<0||byte>=BYTES||bit<0||bit>7||byte!==originalRows[id].byte||bit!==originalRows[id].bit)throw Error(`A lista possui uma posição incompatível para a fala #${id}.`);
+  if(found.has(id))throw Error(`Fala #${id} duplicada na lista.`);
+  found.set(id,{...originalRows[id],d:o.d||'',name:o.name.trim()||originalRows[id].name});
+ }
+ if(found.size!==625)throw Error(`Lista incompleta: ${found.size}/625 entradas válidas. Use o rise.tsv original.`);
+ lines=Array.from({length:625},(_,id)=>found.get(id));haveMap=true;
+ $('mapStatus').className='alert good';$('mapStatus').textContent='✓ Textos carregados: 625 entradas do mapeamento original (os 20 registros fora desta região não fazem parte desta lista).';
+ rebuildCategories();render();
+}
+function rebuildCategories(){
+ const sel=$('category'),keep=sel.value;
+ const cats=[...new Set(lines.filter(x=>$('includeSpecial').checked||how(x).kind==='regular').map(x=>how(x).category))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
+ sel.innerHTML='<option value="all">Todas as situações</option>'+cats.map(c=>`<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join('');
+ sel.value=cats.includes(keep)?keep:'all';
+}
+function decorated(r){const guide=how(r),got=registered(r,now),before=registered(r,prev);return {...r,got,before,guide,person:character(r)};}
+function filterRows(){
+ if(!now)return [];
+ const q=$('query').value.trim().toLocaleLowerCase('pt-BR'),char=$('character').value,cat=$('category').value,showSpecial=$('includeSpecial').checked;
+ return lines.map(decorated).filter(r=>(showSpecial||r.guide.kind==='regular')&&(
+   tab==='all'||(tab==='got'&&r.got)||(tab==='missing'&&!r.got)||(tab==='new'&&prev&&r.got&&!r.before))&&
+   (char==='all'||r.person===char)&&(cat==='all'||r.guide.category===cat)&&
+   (!q||[r.id,r.name,r.person,r.d,r.guide.guide,r.guide.category].join(' ').toLocaleLowerCase('pt-BR').includes(q)));
+}
+function quickChips(){
+ const selected=$('character').value, chars=['Protagonista','Yosuke','Chie','Yukiko','Kanji','Naoto','Teddie','Geral'];
+ $('characterQuick').innerHTML=chars.map(c=>{const missing=now?lines.filter(r=>character(r)===c&&!registered(r,now)&&($('includeSpecial').checked||how(r).kind==='regular')).length:0;
+ return `<button class="quickchar ${selected===c?'active':''}" type="button" data-quick="${c}" aria-pressed="${selected===c}" title="Mostrar falas faltantes de ${c}">${c}<small>${missing}</small></button>`;}).join('');
+ $('characterQuick').querySelectorAll('[data-quick]').forEach(btn=>btn.addEventListener('click',()=>{ $('character').value=btn.dataset.quick;setTab('missing');visible=36;drawList();}));
+}
+function setTab(value){if(value==='new'&&!prev)value='missing';tab=value;document.querySelectorAll('[data-tab]').forEach(t=>t.setAttribute('aria-selected',String(t.dataset.tab===value)));}
+function drawList(){
+ if(!now)return;
+ rowsCache=filterRows();const rows=rowsCache.slice(0,visible);quickChips();
+ $('lineCount').textContent=`${rowsCache.length} resultado(s) · 625 registros mapeados · ${haveMap?'Textos originais carregados':'Textos originais ainda não carregados'}`;
+ $('list').innerHTML=rows.map(r=>{const conf=haveMap?r.guide.confidence:(r.guide.confidence==='Guia'?'Categoria':r.guide.confidence);
+ return `<article class="item ${r.guide.kind}"><div class="item-main"><div class="item-title"><span class="state ${r.got?'yes':'no'}">${r.got?'✓ REGISTRADA':'○ NÃO REGISTRADA'}</span>${prev&&r.got&&!r.before?'<span class="state new">★ NOVA</span>':''}<span class="idbadge">#${String(r.id).padStart(3,'0')}</span><span class="charbadge">${escapeHTML(r.person)}</span></div><div class="quote">${haveMap?escapeHTML(r.name):`Fala #${String(r.id).padStart(3,'0')} · texto disponível ao carregar rise.tsv`}</div><div class="code">${escapeHTML(r.d||'Identificador mapeado')} · endereço 0x${(BASE+r.byte).toString(16).toUpperCase()} / bit ${r.bit}</div></div><div class="item-guide"><div class="guidehead"><span>✦ COMO CONSEGUIR</span><span class="confidence">${escapeHTML(conf)}</span></div><div class="guide-text">${escapeHTML(r.guide.guide)}</div>${r.guide.detail?`<div class="guide-extra">${escapeHTML(r.guide.detail)}</div>`:''}<div class="code" style="margin-top:8px">${escapeHTML(r.guide.category)}</div>${r.guide.kind!=='regular'?'<div class="note-special">⚠ Pode não contar para a conquista ou não ter gatilho identificado.</div>':''}</div></article>`;}).join('')||'<div class="empty"><strong>Nenhuma fala encontrada!</strong>Troque o filtro ou escolha outro personagem.</div>';
+ $('more').style.display=rowsCache.length>visible?'block':'none';
+ $('moreText').textContent=rowsCache.length>visible?`Mostrando ${Math.min(visible,rowsCache.length)} de ${rowsCache.length}.`:'';
+}
+function render(){
+ $('emptyState').hidden=!!now; $('trackerArea').hidden=!now; $('export').disabled=!now;
+ $('tabNew').disabled=!prev;
+ if(!now){$('num').innerHTML='— <span>/ 250</span>';$('remain').textContent='—';$('flags').textContent='—';$('newCount').textContent='—';$('fill').style.width='0%';$('percent').textContent='Carregue um save';$('sourceLabel').textContent='NENHUM SAVE';$('saveStatus').className='alert';$('saveStatus').textContent='Abra um arquivo de save para ver seu progresso.';return;}
+ const n=total(now),v=now.count,nt=total(prev);
+ const lost=prev?prev.flags.reduce((sum,x,i)=>sum+popcount(x&(~now.flags[i]&255)),0):0;
+ $('num').innerHTML=`${n} <span>/250</span>`;$('remain').textContent=Math.max(0,250-n);$('flags').textContent=n;$('newCount').textContent=prev?newBits():'—';
+ $('fill').style.width=Math.min(100,n/250*100)+'%';$('percent').textContent=(100*Math.min(1,n/250)).toLocaleString('pt-BR',{maximumFractionDigits:1})+'% do objetivo';$('sourceLabel').textContent=now.label;
+ $('saveStatus').className='alert good';$('saveStatus').innerHTML=`<strong>✓ ${escapeHTML(now.label)}</strong><br>${n} flags ligadas · contador interno: ${v}${n>255?' (reiniciou após 255)':''}${prev?`<br>Anterior: ${escapeHTML(prev.label)} — ${nt} flags ligadas<br>${newBits()} novas flags ativas${lost?`<br>⚠ ${lost} flags também ficaram inativas. Confira se os saves são da mesma campanha e se escolheu a ordem correta.`:''}`:'<br>Abra um save antigo da mesma campanha para comparar (opcional).'}`;
+ if(n<250) setTab(tab==='new'&&!prev?'missing':tab);
+ drawList();
+}
+async function fetchTSV(){
+ const btn=$('load');btn.disabled=true;btn.innerHTML='<span class="loading">BUSCANDO TEXTOS…</span>';
+ $('mapStatus').className='alert';$('mapStatus').textContent='Conectando ao repositório público do GitHub…';
+ try {const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),10000);
+  let response;try{response=await fetch('https://raw.githubusercontent.com/zarroboogs/p4g-ct/master/data/rise.tsv',{signal:controller.signal,cache:'force-cache'});}finally{clearTimeout(timer);}
+  if(!response.ok)throw Error('HTTP '+response.status);
+  loadTSV(await response.text());
+ } catch(e){$('mapStatus').className='alert bad';$('mapStatus').textContent=`Sem textos automáticos (${e.name==='AbortError'?'conexão demorou demais':e.message}). O mapa de 625 flags continua disponível; para obter textos, baixe e importe o rise.tsv pelo link acima.`;}
+ finally{btn.disabled=false;btn.textContent=haveMap?'RECARREGAR TEXTOS ↻':'TENTAR DE NOVO ↻';}
+}
+$('load').addEventListener('click',fetchTSV);
+$('tsv').addEventListener('change',async ev=>{const f=ev.target.files[0];if(f)try{loadTSV(await f.text());}catch(e){$('mapStatus').className='alert bad';$('mapStatus').textContent=e.message;}});
+$('fileNow').addEventListener('change',async ev=>{const f=ev.target.files[0];if(f)try{const loaded=readSave(await f.arrayBuffer(),f.name);now=loaded;visible=36;render();}catch(e){alert('Não consegui abrir este save: '+e.message);ev.target.value='';}});
+$('filePrev').addEventListener('change',async ev=>{const f=ev.target.files[0];if(f)try{const loaded=readSave(await f.arrayBuffer(),f.name);prev=loaded;visible=36;render();}catch(e){alert('Não consegui abrir o save anterior: '+e.message);ev.target.value='';}});
+$('clearSaves').addEventListener('click',()=>{now=null;prev=null;$('fileNow').value='';$('filePrev').value='';setTab('missing');visible=36;render();});
+document.querySelectorAll('[data-tab]').forEach(btn=>btn.addEventListener('click',()=>{setTab(btn.dataset.tab);visible=36;drawList();}));
+for(const id of ['query','character','category'])$(id).addEventListener(id==='query'?'input':'change',()=>{visible=36;drawList();});
+$('includeSpecial').addEventListener('change',()=>{rebuildCategories();visible=36;drawList();});
+$('more').addEventListener('click',()=>{visible+=36;drawList();});
+$('export').addEventListener('click',()=>{
+ if(!now)return;
+ const quote=x=>'"'+String(x).replace(/"/g,'""')+'"';
+ const data=[['ID','Código','Texto','Personagem','Categoria','Como tentar conseguir','Detalhe','Confiabilidade','Registrada','Nova','Offset','Bit'].join(';')];
+ for(const r of filterRows()){const g=how(r);data.push([r.id,quote(r.d),quote(haveMap?r.name:''),quote(character(r)),quote(g.category),quote(g.guide),quote(g.detail),quote(haveMap?g.confidence:'Categoria'),registered(r,now)?1:0,prev&&registered(r,now)&&!registered(r,prev)?1:0,'0x'+(BASE+r.byte).toString(16).toUpperCase(),r.bit].join(';'));}
+ const blob=new Blob(['\uFEFF'+data.join('\r\n')],{type:'text/csv;charset=utf-8'});
+ const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='rise_tracker_falas.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);
+});
+rebuildCategories();render();fetchTSV();
+</script></body></html>
