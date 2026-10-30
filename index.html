@@ -71,11 +71,11 @@
 <div class="toolbar"><input class="search" id="query" type="search" placeholder="Search by line, event, character, or ID…" aria-label="Search lines"><select class="select" id="character" aria-label="Filter by character"><option value="all">All characters</option><option>Protagonist</option><option>Yosuke</option><option>Chie</option><option>Yukiko</option><option>Kanji</option><option>Naoto</option><option>Teddie</option><option>General</option></select><select class="select" id="category" aria-label="Filter by situation"><option value="all">All situations</option></select></div>
 <div class="guide-note">✦ <b>Quick filter:</b> choose a character to show only their missing lines.</div><div class="chips" id="characterQuick"></div>
 <label class="special-toggle"><input id="includeSpecial" type="checkbox"> Show internal entries, boss lines, and unverified lines</label><div id="lineCount" class="line-count"></div><div class="list" id="list"></div><div class="line-count" id="moreText"></div><button class="btn secondary full" id="more" style="display:none" type="button">SHOW MORE LINES ↓</button></div></main></div>
-<section class="help" id="ajuda"><h2>COMO USAR · 3 PASSOS</h2><div class="step-row"><div class="step-digit">1</div><p><strong>Encontre seus saves na Steam.</strong> Abra a pasta <code>userdata</code> dentro da instalação do Steam, depois <code>SEU_ID\1113000\remote</code>. O nome varia pelo slot: <code>data0001.bin</code>, <code>data0002.bin</code> etc.</p></div><span class="path">[Pasta da Steam]\userdata\[Seu ID]\1113000\remote\data0001.bin</span><div class="step-row"><div class="step-digit">2</div><p><strong>Escolha o arquivo no navegador.</strong> O tracker lê os dados sem alterar o jogo. Se tiver um save antigo <b>da mesma campanha</b>, você pode compará-lo (opcional).</p></div><div class="step-row"><div class="step-digit">3</div><p><strong>Use “Faltantes” e filtre por personagem.</strong> Cada cartão mostra uma orientação; algumas condições vêm do guia e outras são estimativas — observe a etiqueta de confiança.</p></div>
-<details><summary>Por que algumas entradas não aparecem?</summary><p>Entradas internas sem diálogo conhecido e falas especiais/chefes ficam ocultas por padrão. Você pode exibi-las no filtro acima depois de carregar um save. Algumas podem não contar para a conquista.</p></details>
-<details><summary>O que significa 256+ falas e contador diferente?</summary><p>O contador do jogo usa um byte e volta a zero depois de 255. O tracker usa a soma das flags da região mapeada; assim pode continuar indicando o total mesmo quando o contador já deu a volta.</p></details>
-<details><summary>Preciso instalar o Cheat Engine ou enviar meu arquivo?</summary><p>Não. Basta abrir este HTML no navegador e selecionar uma cópia do save. A única conexão externa opcional é para buscar a lista pública de nomes das falas no GitHub; o save nunca é enviado.</p></details>
-</section><footer class="foot"><b>Rise Tracker Community Edition</b> · projeto comunitário não oficial, feito para fins de acompanhamento. Não modifica saves. Condições de fala podem ser aproximadas e a elegibilidade de certos diálogos para o troféu não é garantida. Referências: <a href="https://github.com/zarroboogs/p4g-ct" target="_blank" rel="noopener noreferrer">mapeamento original</a> e <a href="https://gamefaqs.gamespot.com/xbox-series-x/370653-persona-4-golden/faqs/81937/hardcore-risette-fan" target="_blank" rel="noopener noreferrer">guia de Hardcore Risette Fan</a>.</footer>
+<section class="help" id="help"><h2>HOW TO USE · 3 STEPS</h2><div class="step-row"><div class="step-digit">1</div><p><strong>Find your Steam saves.</strong> Open Steam’s <code>userdata</code> folder, then <code>YOUR_STEAM_ID\1113000\remote</code>. Save slots are named <code>data0001.bin</code>, <code>data0002.bin</code>, etc.</p></div><span class="path">[Steam folder]\userdata\[Your Steam ID]\1113000\remote\data0001.bin</span><div class="step-row"><div class="step-digit">2</div><p><strong>Open your save.</strong> The tracker reads it without changing the file or game. You can also compare an older save <b>from the same playthrough</b>.</p></div><div class="step-row"><div class="step-digit">3</div><p><strong>Filter by missing lines and character.</strong> Each entry suggests a trigger. Some are documented; others are estimates, as noted in the label.</p></div>
+<details><summary>Why are some entries hidden?</summary><p>Internal entries without known dialogue and special or boss lines are hidden by default. Use the checkbox to show them. Some may not count toward the achievement.</p></details>
+<details><summary>Why can the line count exceed 255?</summary><p>The in-game counter uses one byte and wraps after 255. The tracker counts recorded flags instead, so it continues past 255.</p></details>
+<details><summary>Do I need Cheat Engine or an account?</summary><p>No. Open the site and select a copy of your save. The only external request retrieves the public line list from GitHub. Your save is never uploaded.</p></details>
+</section><footer class="foot"><b>Rise Tracker Community Edition</b> · an unofficial fan-made tracker. It does not edit saves. Some triggers are estimates, and not every line is confirmed to count toward the achievement. Sources: <a href="https://github.com/zarroboogs/p4g-ct" target="_blank" rel="noopener noreferrer">original flag mapping</a> e <a href="https://gamefaqs.gamespot.com/xbox-series-x/370653-persona-4-golden/faqs/81937/hardcore-risette-fan" target="_blank" rel="noopener noreferrer">Hardcore Risette Fan guide</a>.</footer>
 </div>
 <script>
 'use strict';
@@ -92,12 +92,12 @@ function total(s){return s?s.flags.reduce((a,x)=>a+popcount(x),0):0;}
 function registered(row,save){return save?!!(save.flags[row.byte]&(1<<row.bit)):false;}
 function newBits(){return now&&prev?now.flags.reduce((a,x,i)=>a+popcount(x&(~prev.flags[i]&255)),0):0;}
 function readSave(buff,name){
- if(!/\.bin$/i.test(name))throw Error('Selecione um arquivo de save com extensão .bin.');
+ if(!/\.bin$/i.test(name))throw Error('Select a .bin save file.');
  const bytes=new Uint8Array(buff);
- if(bytes.length!==EXPECTED_SIZE)throw Error(`Formato não compatível: ${bytes.length.toLocaleString('pt-BR')} bytes. Esta versão foi testada com saves Steam de 217.937 bytes; não tente usar arquivos de outra plataforma.`);
+ if(bytes.length!==EXPECTED_SIZE)throw Error(`Unsupported file format: ${bytes.length.toLocaleString('en-US')} bytes. This reader supports the tested 217,937-byte PC/Steam format. Other platforms have not been validated.`);
  const flags=[...bytes.slice(BASE,BASE+BYTES)];
  const count=bytes[COUNTER],sum=flags.reduce((a,x)=>a+popcount(x),0);
- if(sum%256!==count)throw Error(`Este arquivo não passou na validação (contador ${count}, flags ${sum}). Talvez seja um formato diferente ou o arquivo esteja incompleto.`);
+ if(sum%256!==count)throw Error(`Save validation failed (counter ${count}, flags ${sum}). The file may be incomplete or use a different format.`);
  return {count,flags,label:name,estimated:sum};
 }
 const PARTY=['Protagonist','Yosuke','Chie','Yukiko','Kanji','Naoto','Teddie'];
@@ -194,51 +194,51 @@ function how(r){
 function loadTSV(text){
  const rows=text.replace(/^\uFEFF/,'').split(/\r?\n/).map(x=>x.trimEnd()).filter(Boolean);
  const cols=rows[0].split('\t').map(x=>x.trim().toLowerCase());
- for(const key of ['id','byte','bit','name'])if(!cols.includes(key))throw Error('O TSV não contém a coluna '+key+'.');
+ for(const key of ['id','byte','bit','name'])if(!cols.includes(key))throw Error('Missing TSV column: '+key+'.');
  const found=new Map();
  for(const ln of rows.slice(1)){
   const cells=ln.split('\t'); const o=Object.fromEntries(cols.map((k,i)=>[k,cells[i]??'']));
   const id=Number(o.id),byte=Number(o.byte),bit=Number(o.bit);
   if(!Number.isInteger(id)||id<0||id>=625)continue;
-  if(!Number.isInteger(byte)||!Number.isInteger(bit)||byte<0||byte>=BYTES||bit<0||bit>7||byte!==originalRows[id].byte||bit!==originalRows[id].bit)throw Error(`A lista possui uma posição incompatível para a fala #${id}.`);
-  if(found.has(id))throw Error(`Fala #${id} duplicada na lista.`);
+  if(!Number.isInteger(byte)||!Number.isInteger(bit)||byte<0||byte>=BYTES||bit<0||bit>7||byte!==originalRows[id].byte||bit!==originalRows[id].bit)throw Error(`Mismatched flag position for line #${id}.`);
+  if(found.has(id))throw Error(`Line #${id} is duplicated in the list.`);
   found.set(id,{...originalRows[id],d:o.d||'',name:o.name.trim()||originalRows[id].name});
  }
- if(found.size!==625)throw Error(`Lista incompleta: ${found.size}/625 entradas válidas. Use o rise.tsv original.`);
+ if(found.size!==625)throw Error(`Incomplete list: ${found.size}/625 valid entries. Import the original rise.tsv.`);
  lines=Array.from({length:625},(_,id)=>found.get(id));haveMap=true;
- $('mapStatus').className='alert good';$('mapStatus').textContent='✓ Textos carregados: 625 entradas do mapeamento original (os 20 registros fora desta região não fazem parte desta lista).';
+ $('mapStatus').className='alert good';$('mapStatus').textContent='✓ Textos carregados: 625 entradas do original flag mapping (os 20 registros fora desta região não fazem parte desta lista).';
  rebuildCategories();render();
 }
 function rebuildCategories(){
  const sel=$('category'),keep=sel.value;
- const cats=[...new Set(lines.filter(x=>$('includeSpecial').checked||how(x).kind==='regular').map(x=>how(x).category))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
+ const cats=[...new Set(lines.filter(x=>$('includeSpecial').checked||how(x).kind==='regular').map(x=>how(x).category))].sort((a,b)=>a.localeCompare(b,'en-US'));
  sel.innerHTML='<option value="all">All situations</option>'+cats.map(c=>`<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join('');
  sel.value=cats.includes(keep)?keep:'all';
 }
 function decorated(r){const guide=how(r),got=registered(r,now),before=registered(r,prev);return {...r,got,before,guide,person:character(r)};}
 function filterRows(){
  if(!now)return [];
- const q=$('query').value.trim().toLocaleLowerCase('pt-BR'),char=$('character').value,cat=$('category').value,showSpecial=$('includeSpecial').checked;
+ const q=$('query').value.trim().toLocaleLowerCase('en-US'),char=$('character').value,cat=$('category').value,showSpecial=$('includeSpecial').checked;
  return lines.map(decorated).filter(r=>(showSpecial||r.guide.kind==='regular')&&(
    tab==='all'||(tab==='got'&&r.got)||(tab==='missing'&&!r.got)||(tab==='new'&&prev&&r.got&&!r.before))&&
    (char==='all'||r.person===char)&&(cat==='all'||r.guide.category===cat)&&
-   (!q||[r.id,r.name,r.person,r.d,r.guide.guide,r.guide.category].join(' ').toLocaleLowerCase('pt-BR').includes(q)));
+   (!q||[r.id,r.name,r.person,r.d,r.guide.guide,r.guide.category].join(' ').toLocaleLowerCase('en-US').includes(q)));
 }
 function quickChips(){
- const selected=$('character').value, chars=['Protagonista','Yosuke','Chie','Yukiko','Kanji','Naoto','Teddie','Geral'];
+ const selected=$('character').value, chars=['Protagonist','Yosuke','Chie','Yukiko','Kanji','Naoto','Teddie','General'];
  $('characterQuick').innerHTML=chars.map(c=>{const missing=now?lines.filter(r=>character(r)===c&&!registered(r,now)&&($('includeSpecial').checked||how(r).kind==='regular')).length:0;
- return `<button class="quickchar ${selected===c?'active':''}" type="button" data-quick="${c}" aria-pressed="${selected===c}" title="Mostrar falas faltantes de ${c}">${c}<small>${missing}</small></button>`;}).join('');
+ return `<button class="quickchar ${selected===c?'active':''}" type="button" data-quick="${c}" aria-pressed="${selected===c}" title="Show missing lines for ${c}">${c}<small>${missing}</small></button>`;}).join('');
  $('characterQuick').querySelectorAll('[data-quick]').forEach(btn=>btn.addEventListener('click',()=>{ $('character').value=btn.dataset.quick;setTab('missing');visible=36;drawList();}));
 }
 function setTab(value){if(value==='new'&&!prev)value='missing';tab=value;document.querySelectorAll('[data-tab]').forEach(t=>t.setAttribute('aria-selected',String(t.dataset.tab===value)));}
 function drawList(){
  if(!now)return;
  rowsCache=filterRows();const rows=rowsCache.slice(0,visible);quickChips();
- $('lineCount').textContent=`${rowsCache.length} resultado(s) · 625 registros mapeados · ${haveMap?'Textos originais carregados':'Textos originais ainda não carregados'}`;
- $('list').innerHTML=rows.map(r=>{const conf=haveMap?r.guide.confidence:(r.guide.confidence==='Guia'?'Categoria':r.guide.confidence);
- return `<article class="item ${r.guide.kind}"><div class="item-main"><div class="item-title"><span class="state ${r.got?'yes':'no'}">${r.got?'✓ REGISTRADA':'○ NÃO REGISTRADA'}</span>${prev&&r.got&&!r.before?'<span class="state new">★ NOVA</span>':''}<span class="idbadge">#${String(r.id).padStart(3,'0')}</span><span class="charbadge">${escapeHTML(r.person)}</span></div><div class="quote">${haveMap?escapeHTML(r.name):`Fala #${String(r.id).padStart(3,'0')} · texto disponível ao carregar rise.tsv`}</div><div class="code">${escapeHTML(r.d||'Identificador mapeado')} · endereço 0x${(BASE+r.byte).toString(16).toUpperCase()} / bit ${r.bit}</div></div><div class="item-guide"><div class="guidehead"><span>✦ COMO CONSEGUIR</span><span class="confidence">${escapeHTML(conf)}</span></div><div class="guide-text">${escapeHTML(r.guide.guide)}</div>${r.guide.detail?`<div class="guide-extra">${escapeHTML(r.guide.detail)}</div>`:''}<div class="code" style="margin-top:8px">${escapeHTML(r.guide.category)}</div>${r.guide.kind!=='regular'?'<div class="note-special">⚠ Pode não contar para a conquista ou não ter gatilho identificado.</div>':''}</div></article>`;}).join('')||'<div class="empty"><strong>Nenhuma fala encontrada!</strong>Troque o filtro ou escolha outro personagem.</div>';
+ $('lineCount').textContent=`${rowsCache.length} results · 625 mapped entries · ${haveMap?'Original text loaded':'Original text not loaded'}`;
+ $('list').innerHTML=rows.map(r=>{const conf=haveMap?r.guide.confidence:(r.guide.confidence==='Guia'?'Category':r.guide.confidence);
+ return `<article class="item ${r.guide.kind}"><div class="item-main"><div class="item-title"><span class="state ${r.got?'yes':'no'}">${r.got?'✓ RECORDED':'○ NOT RECORDED'}</span>${prev&&r.got&&!r.before?'<span class="state new">★ NEW</span>':''}<span class="idbadge">#${String(r.id).padStart(3,'0')}</span><span class="charbadge">${escapeHTML(r.person)}</span></div><div class="quote">${haveMap?escapeHTML(r.name):`Line #${String(r.id).padStart(3,'0')} · text available after loading rise.tsv`}</div><div class="code">${escapeHTML(r.d||'Mapped identifier')} · offset 0x${(BASE+r.byte).toString(16).toUpperCase()} / bit ${r.bit}</div></div><div class="item-guide"><div class="guidehead"><span>✦ HOW TO TRIGGER</span><span class="confidence">${escapeHTML(conf)}</span></div><div class="guide-text">${escapeHTML(r.guide.guide)}</div>${r.guide.detail?`<div class="guide-extra">${escapeHTML(r.guide.detail)}</div>`:''}<div class="code" style="margin-top:8px">${escapeHTML(r.guide.category)}</div>${r.guide.kind!=='regular'?'<div class="note-special">⚠ May not count toward the achievement or may have no known trigger.</div>':''}</div></article>`;}).join('')||'<div class="empty"><strong>No matching lines.</strong>Try another filter or character.</div>';
  $('more').style.display=rowsCache.length>visible?'block':'none';
- $('moreText').textContent=rowsCache.length>visible?`Mostrando ${Math.min(visible,rowsCache.length)} de ${rowsCache.length}.`:'';
+ $('moreText').textContent=rowsCache.length>visible?`Showing ${Math.min(visible,rowsCache.length)} of ${rowsCache.length}.`:'';
 }
 function render(){
  $('emptyState').hidden=!!now; $('trackerArea').hidden=!now; $('export').disabled=!now;
@@ -247,25 +247,25 @@ function render(){
  const n=total(now),v=now.count,nt=total(prev);
  const lost=prev?prev.flags.reduce((sum,x,i)=>sum+popcount(x&(~now.flags[i]&255)),0):0;
  $('num').innerHTML=`${n} <span>/250</span>`;$('remain').textContent=Math.max(0,250-n);$('flags').textContent=n;$('newCount').textContent=prev?newBits():'—';
- $('fill').style.width=Math.min(100,n/250*100)+'%';$('percent').textContent=(100*Math.min(1,n/250)).toLocaleString('pt-BR',{maximumFractionDigits:1})+'% do objetivo';$('sourceLabel').textContent=now.label;
- $('saveStatus').className='alert good';$('saveStatus').innerHTML=`<strong>✓ ${escapeHTML(now.label)}</strong><br>${n} flags ligadas · contador interno: ${v}${n>255?' (reiniciou após 255)':''}${prev?`<br>Anterior: ${escapeHTML(prev.label)} — ${nt} flags ligadas<br>${newBits()} novas flags ativas${lost?`<br>⚠ ${lost} flags também ficaram inativas. Confira se os saves são da mesma campanha e se escolheu a ordem correta.`:''}`:'<br>Abra um save antigo da mesma campanha para comparar (opcional).'}`;
+ $('fill').style.width=Math.min(100,n/250*100)+'%';$('percent').textContent=(100*Math.min(1,n/250)).toLocaleString('en-US',{maximumFractionDigits:1})+'% of target';$('sourceLabel').textContent=now.label;
+ $('saveStatus').className='alert good';$('saveStatus').innerHTML=`<strong>✓ ${escapeHTML(now.label)}</strong><br>${n} recorded flags · in-game counter: ${v}${n>255?' (wrapped after 255)':''}${prev?`<br>Previous: ${escapeHTML(prev.label)} — ${nt} recorded flags<br>${newBits()} newly set flags${lost?`<br>⚠ ${lost} flags were also cleared. Check that both saves come from the same playthrough and are in chronological order.`:''}`:'<br>Select an older save from the same playthrough to compare (optional).'}`;
  if(n<250) setTab(tab==='new'&&!prev?'missing':tab);
  drawList();
 }
 async function fetchTSV(){
- const btn=$('load');btn.disabled=true;btn.innerHTML='<span class="loading">BUSCANDO TEXTOS…</span>';
- $('mapStatus').className='alert';$('mapStatus').textContent='Conectando ao repositório público do GitHub…';
+ const btn=$('load');btn.disabled=true;btn.innerHTML='<span class="loading">LOADING LINE TEXT…</span>';
+ $('mapStatus').className='alert';$('mapStatus').textContent='Fetching the public line list from GitHub…';
  try {const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),10000);
   let response;try{response=await fetch('https://raw.githubusercontent.com/zarroboogs/p4g-ct/master/data/rise.tsv',{signal:controller.signal,cache:'force-cache'});}finally{clearTimeout(timer);}
   if(!response.ok)throw Error('HTTP '+response.status);
   loadTSV(await response.text());
- } catch(e){$('mapStatus').className='alert bad';$('mapStatus').textContent=`Sem textos automáticos (${e.name==='AbortError'?'conexão demorou demais':e.message}). O mapa de 625 flags continua disponível; para obter textos, baixe e importe o rise.tsv pelo link acima.`;}
- finally{btn.disabled=false;btn.textContent=haveMap?'RECARREGAR TEXTOS ↻':'TENTAR DE NOVO ↻';}
+ } catch(e){$('mapStatus').className='alert bad';$('mapStatus').textContent=`Could not load line text (${e.name==='AbortError'?'request timed out':e.message}). Flag positions are available offline. Download rise.tsv and import it above.`;}
+ finally{btn.disabled=false;btn.textContent=haveMap?'RELOAD LINE TEXT ↻':'RETRY ↻';}
 }
 $('load').addEventListener('click',fetchTSV);
 $('tsv').addEventListener('change',async ev=>{const f=ev.target.files[0];if(f)try{loadTSV(await f.text());}catch(e){$('mapStatus').className='alert bad';$('mapStatus').textContent=e.message;}});
-$('fileNow').addEventListener('change',async ev=>{const f=ev.target.files[0];if(f)try{const loaded=readSave(await f.arrayBuffer(),f.name);now=loaded;visible=36;render();}catch(e){alert('Não consegui abrir este save: '+e.message);ev.target.value='';}});
-$('filePrev').addEventListener('change',async ev=>{const f=ev.target.files[0];if(f)try{const loaded=readSave(await f.arrayBuffer(),f.name);prev=loaded;visible=36;render();}catch(e){alert('Não consegui abrir o save anterior: '+e.message);ev.target.value='';}});
+$('fileNow').addEventListener('change',async ev=>{const f=ev.target.files[0];if(f)try{const loaded=readSave(await f.arrayBuffer(),f.name);now=loaded;visible=36;render();}catch(e){alert('Could not open save: '+e.message);ev.target.value='';}});
+$('filePrev').addEventListener('change',async ev=>{const f=ev.target.files[0];if(f)try{const loaded=readSave(await f.arrayBuffer(),f.name);prev=loaded;visible=36;render();}catch(e){alert('Could not open older save: '+e.message);ev.target.value='';}});
 $('clearSaves').addEventListener('click',()=>{now=null;prev=null;$('fileNow').value='';$('filePrev').value='';setTab('missing');visible=36;render();});
 document.querySelectorAll('[data-tab]').forEach(btn=>btn.addEventListener('click',()=>{setTab(btn.dataset.tab);visible=36;drawList();}));
 for(const id of ['query','character','category'])$(id).addEventListener(id==='query'?'input':'change',()=>{visible=36;drawList();});
@@ -274,10 +274,10 @@ $('more').addEventListener('click',()=>{visible+=36;drawList();});
 $('export').addEventListener('click',()=>{
  if(!now)return;
  const quote=x=>'"'+String(x).replace(/"/g,'""')+'"';
- const data=[['ID','Código','Texto','Personagem','Categoria','Como tentar conseguir','Detalhe','Confiabilidade','Registrada','Nova','Offset','Bit'].join(';')];
+ const data=[['ID','Code','Line','Character','Category','Suggested trigger','Details','Confidence','Recorded','New','Offset','Bit'].join(';')];
  for(const r of filterRows()){const g=how(r);data.push([r.id,quote(r.d),quote(haveMap?r.name:''),quote(character(r)),quote(g.category),quote(g.guide),quote(g.detail),quote(haveMap?g.confidence:'Categoria'),registered(r,now)?1:0,prev&&registered(r,now)&&!registered(r,prev)?1:0,'0x'+(BASE+r.byte).toString(16).toUpperCase(),r.bit].join(';'));}
  const blob=new Blob(['\uFEFF'+data.join('\r\n')],{type:'text/csv;charset=utf-8'});
- const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='rise_tracker_falas.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);
+ const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='rise_tracker_lines.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);
 });
 rebuildCategories();render();fetchTSV();
 </script></body></html>
