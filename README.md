@@ -1,29 +1,45 @@
-# Rise Tracker — Community Edition
+# Rise Tracker
 
-Ferramenta comunitária e não oficial para acompanhar as falas da Rise em **Persona 4 Golden (PC/Steam)** e ajudar na conquista **Hardcore Risette Fan**.
+A browser-based checklist for Rise Kujikawa's battle dialogue in **Persona 4 Golden** (PC/Steam), built around the *Hardcore Risette Fan* achievement.
 
-## Como usar
+**Site:** https://shinkiz0805.github.io/Rise-Tracker/
 
-1. Abra o site publicado pelo GitHub Pages.
-2. Selecione uma **cópia** do arquivo `data000X.bin` no campo **Save atual**.
-3. Filtre por personagem, situação, falas registradas ou faltantes.
-4. Opcionalmente, importe outro save mais antigo da mesma campanha para ver novos registros.
+## What it does
 
-**Onde ficam os saves no Windows (Steam):** `Steam\userdata\SEU_ID\1113000\remote\data0001.bin` (o número varia por slot).
+- Reads recorded dialogue flags from a local P4G save file.
+- Shows recorded and missing lines, with filters for party members and battle situations.
+- Includes suggested triggers for each line, with labels for uncertain conditions.
+- Optionally compares two saves from the same playthrough to find newly recorded lines.
+- Exports the filtered list to CSV.
 
-O site lê os saves **apenas no navegador**, sem enviá-los para a internet e sem escrever neles. Não é necessário instalar Cheat Engine.
+No Cheat Engine installation or account is required.
 
-## Compatibilidade e limites
+## How to use
 
-- Validado com arquivos `.bin` de **217.937 bytes** da versão PC/Steam; consoles e outros formatos não foram validados.
-- O mapa de **625 flags** está incluído no HTML.
-- Os textos originais são carregados de uma lista pública de `rise.tsv` no repositório [p4g-ct](https://github.com/zarroboogs/p4g-ct) (ou importados manualmente). Sem conexão, as IDs e orientações permanecem disponíveis.
-- Algumas condições e falas de chefes são estimativas e podem não contar para a conquista. Use as etiquetas de confiabilidade.
-- O site não salva uploads nem os envia a servidores. O carregamento dos textos consulta uma fonte pública no GitHub.
+1. Open the site in a desktop browser.
+2. Find your P4G save in Steam's `userdata` folder. A typical path is:
+   ```text
+   Steam\userdata\YOUR_STEAM_ID\1113000\remote\data0001.bin
+   ```
+   The filename changes with the save slot (`data0002.bin`, etc.).
+3. Choose a **copy** of the file under **Current save**.
+4. Use the **Missing** tab and the character or situation filters to narrow down the list.
+5. To compare progress, optionally load an **older save from the same playthrough**.
 
-## Créditos e fontes
+Save files are read in the browser. The site does not modify or upload them.
 
-- Mapeamento das flags: [zarroboogs/p4g-ct](https://github.com/zarroboogs/p4g-ct).
-- Orientações para a conquista: [Guia Hardcore Risette Fan no GameFAQs](https://gamefaqs.gamespot.com/xbox-series-x/370653-persona-4-golden/faqs/81937/hardcore-risette-fan).
+## Compatibility
 
-Projeto de fã não oficial, sem vínculo com Atlus, SEGA ou os autores dos materiais de referência.
+- Tested with **217,937-byte `.bin` files** from the PC/Steam version of Persona 4 Golden.
+- Console saves and other file formats have not been validated.
+- The map contains **625 dialogue flags**, including special and internal entries. Not all mapped entries are confirmed to count toward the achievement.
+- The game's one-byte counter wraps after 255; the tracker counts mapped flags instead.
+- The line names are fetched from the public `rise.tsv` file in the [p4g-ct](https://github.com/zarroboogs/p4g-ct) project. You can also import that file manually if the request fails.
+- Some suggested triggers are inferred from the dialogue rather than documented in the game. Check the confidence labels, especially for boss-specific lines.
+
+## Sources
+
+- [zarroboogs/p4g-ct](https://github.com/zarroboogs/p4g-ct) — dialogue flag locations and line identifiers.
+- [Hardcore Risette Fan guide on GameFAQs](https://gamefaqs.gamespot.com/xbox-series-x/370653-persona-4-golden/faqs/81937/hardcore-risette-fan) — battle conditions and achievement notes.
+
+This is an unofficial fan project and is not affiliated with Atlus or SEGA.
