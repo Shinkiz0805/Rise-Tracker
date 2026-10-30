@@ -82,7 +82,7 @@
 const BASE=0x19164, COUNTER=0x19162, BYTES=240, EXPECTED_SIZE=217937;
 const PACKED='00000400800900a00c00d00g00h00k00l00o00p00s00t00w00x01001101401501801901c01d01g01h01k01l01o01p01s01t01w01x02002102402502802902c02d02g02h02k02l02o02p02s02t02w02x03003103403503803903c03d03g03h03k03l03o03p03s03t03w03x04004104404804c04g04k04o04s04w05005405805c05g05k05o05s05w06006406806c06g06k06o06s06w07007407807c07g07k07o07s07w08008408808c08g08k08o08s08w09009409809c09g09k09o09s09w0a00a40a80ac0ag0ak0ao0as0aw0b00b40b80bc0bg0bk0bo0bs0bw0c00c40c80cc0cg0ck0co0cs0cw0d00d40d80dc0dg0dk0do0ds0dw0e00e40e80ec0eg0ek0eo0ep0es0et0ew0ex0f00f10f40f50f80fc0fg0fk0fo0fs0fw0g00g40g80gc0gg0gk0go0gs0gw0h00h40h80hc0hg0hk0ho0hs0hw0i00i40i80ic0id0ig0ik0io0is0iw0j00j40j80jc0jg0jk0jo0js0jw0k00k40k80kc0kg0kk0ko0ks0kw0l00l40l80lc0lg0lk0lo0ls0lw0m00m40m80mc0mg0mk0mo0ms0mw0n00n10n40n50n80n90nc0nd0ng0nh0nk0nl0no0np0ns0nt0nw0nx0o00o10o40o50o80o90oc0od0og0oh0ok0ol0oo0op0os0ot0ow0ox0p00p10p40p50p80p90pc0pd0pg0ph0pk0pl0po0pp0ps0pt0pw0px0q00q10q40q50q80q90qc0qd0qg0qh0qk0ql0qo0qp0qs0qt0qw0qx0r00r10r40r50r80r90rc0rd0rg0rh0rk0rl0ro0rp0rs0rt0rw0rx0s00s10s20s40s80sc0sg0sk0so0ss0sw0t00t40t80tc0tg0tk0to0ts0tw0u00u40u80uc0ug0uk0uo0us0uw0v00v40v80v90va0vc0vd0ve0vg0vh0vi0vk0vl0vm0vo0vp0vq0vs0vt0vu0vw0vx0vy0w00w40w80wc0wg0wk0wo0ws0ww0x00x40x80xc0xg0xk0xo0xs0xw0y00y40y80yc0yg0yk0yo0ys0yw0z00z40z80zc0zg0zk0zo0zs0zw0zx0zy10010110210410510610810910a10c10d10e10g10h10i10k10l10m10o10p10q10s10t10u10w10x10y11011111211411511611811911a11c11d11e11g11k11o11s11w12012412812c12g12k12o12s12w13013413813c13g13k13o13p13q13s13w14014414814c14g14k14o14s14w15015415815915a15c15g15k15o15s15w16016416816c16g16k16o16s16t16u16w16x16y17017417817c17g17k17o17s17w18018418818c18g18k18o18s18w19019419819c19g19k19o19s19w1a01a41a81ac1ag1ah1ak1al1ao1ap1as1at1aw1ax1b01b11b41b81bc1bg1bk1bo1bs1bw1c01c41c81cc1cg1ck1co1cs1cw1d01d41d81dc1dg1dk1do1ds1dw1e01e41e81ec1eg1ek1eo1es1ew1f01f41f81fc1fg1fk1fo1fs1fw1g01g41g81gc1gg1gk1go1gs1gw1h01h41h8';
 const mapPositions=Array.from({length:625},(_,i)=>parseInt(PACKED.slice(i*3,i*3+3),36));
-const originalRows=mapPositions.map((p,id)=>({id,idx:id,byte:Math.floor(p/8),bit:p%8,d:'',name:`Fala #${String(id).padStart(3,'0')}`}));
+const originalRows=mapPositions.map((p,id)=>({id,idx:id,byte:Math.floor(p/8),bit:p%8,d:'',name:`Line #${String(id).padStart(3,'0')}`}));
 let lines=originalRows.map(r=>({...r}));
 let haveMap=false,now=null,prev=null,tab='missing',visible=36,rowsCache=[];
 const $=id=>document.getElementById(id);
@@ -100,87 +100,97 @@ function readSave(buff,name){
  if(sum%256!==count)throw Error(`Este arquivo não passou na validação (contador ${count}, flags ${sum}). Talvez seja um formato diferente ou o arquivo esteja incompleto.`);
  return {count,flags,label:name,estimated:sum};
 }
-const PARTY=['Protagonista','Yosuke','Chie','Yukiko','Kanji','Naoto','Teddie'];
+const PARTY=['Protagonist','Yosuke','Chie','Yukiko','Kanji','Naoto','Teddie'];
 const PLACEHOLDER_IDS=new Set([491,492,493,494,495,496,507,508,509,510,511,512,547,556,594,595,596,597,598,599,600,601,602,603,604,605,606,607,608,609,611,612,613,614]);
-function character(r){const n=String(r.name||'').toLowerCase(),id=r.id;
-if(/yosuke/.test(n))return 'Yosuke';if(/chie/.test(n))return 'Chie';if(/yukiko/.test(n))return 'Yukiko';if(/kanji/.test(n))return 'Kanji';if(/naoto/.test(n))return 'Naoto';if(/teddie/.test(n))return 'Teddie';
-if(/\bsenpai\b|\byu\b|your persona|your health|you rule/.test(n))return 'Protagonista';
-// Ordem dos personagens na tabela, quando a fala não contém o nome.
-const cyc=(start,end)=>id>=start&&id<=end?PARTY[(id-start)%7]:null;
-for(const [a,b] of [[81,87],[89,95],[97,103],[105,111],[113,119],[140,146],[147,153],[154,160],[161,167],[342,348],[349,355],[356,362],[363,369],[391,397],[398,404],[405,411],[412,418],[419,425],[468,474],[475,481]]){const ch=cyc(a,b);if(ch)return ch;}
-// Algumas falas genéricas não citam o personagem no texto: o grupo vem do ID original.
-for(const [start,end] of [[370,390],[426,446],[447,467]])if(id>=start&&id<=end)return PARTY[Math.floor((id-start)/3)];
-if(id>=132&&id<=137)return PARTY[id-131];
-if(id===637)return 'Protagonista';if(id>=638&&id<=643)return PARTY[id-636];
-return 'Geral';}
-function element(text){const n=text.toLowerCase();if(/physical/.test(n))return 'físicos';if(/electric|zap|lightning/.test(n))return 'elétricos';if(/darkness|dark attacks/.test(n))return 'de escuridão';if(/\blight\b/.test(n))return 'de luz';if(/\bfire\b/.test(n))return 'de fogo';if(/\bice\b/.test(n))return 'de gelo';if(/\bwind\b/.test(n))return 'de vento';return 'elementais';}
-function label(c){return c==='Geral'?'grupo':c==='Protagonista'?'protagonista':c;}
-const identified=(category,guide,detail='',confidence='Guia',kind='regular')=>({category,guide,detail,confidence,kind});
+function character(r){
+ const n=String(r.name||'').toLowerCase(),id=r.id;
+ for(const member of ['Yosuke','Chie','Yukiko','Kanji','Naoto','Teddie'])if(n.includes(member.toLowerCase()))return member;
+ if(/\bsenpai\b|\byu\b|your persona|your health|you rule/.test(n))return 'Protagonist';
+ const cyc=(a,b)=>id>=a&&id<=b?PARTY[(id-a)%7]:null;
+ for(const [a,b] of [[81,87],[89,95],[97,103],[105,111],[113,119],[140,146],[147,153],[154,160],[161,167],[342,348],[349,355],[356,362],[363,369],[391,397],[398,404],[405,411],[412,418],[419,425],[468,474],[475,481]]){const c=cyc(a,b);if(c)return c;}
+ for(const [a,b] of [[370,390],[426,446],[447,467]])if(id>=a&&id<=b)return PARTY[Math.floor((id-a)/3)];
+ if(id>=132&&id<=137)return PARTY[id-131];
+ return 'General';
+}
+function element(text){
+ const n=text.toLowerCase();
+ if(/physical/.test(n))return 'physical';
+ if(/electric|zap|lightning/.test(n))return 'electric';
+ if(/darkness|dark attacks/.test(n))return 'dark';
+ if(/\blight\b/.test(n))return 'light';
+ if(/\bfire\b/.test(n))return 'fire';
+ if(/\bice\b/.test(n))return 'ice';
+ if(/\bwind\b/.test(n))return 'wind';
+ return 'elemental';
+}
+function label(c){return c==='General'?'the party':c==='Protagonist'?'the protagonist':c;}
+const identified=(category,guide,detail='',confidence='Guide',kind='regular')=>({category,guide,detail,confidence,kind});
 function isPlaceholder(r){return PLACEHOLDER_IDS.has(r.id)||/^(?:h105_\d+_\d+|bt[l_].*)$/i.test(String(r.name||'').trim())||!String(r.name||'').trim();}
-function how(r){const id=r.id,actor=character(r),who=label(actor),e=element(r.name),n=String(r.name||'').toLowerCase();
-const g=(c,t,d='',confidence='Guia',kind='regular')=>identified(c,t,d,confidence,kind);
-if(isPlaceholder(r))return g('Código interno','A tabela original não identifica texto de diálogo para este código.','Não há gatilho confiável; ocultado da lista de farm.', 'Não identificada','internal');
-if(id===0)return g('Inimigo especial','Encontre o Reaper e inicie a luta.','É um encontro especial; não vale a pena usá-lo como método principal de farm.');
-if(id===1)return g('Inimigo raro','Comece uma luta contra uma Golden Hand (mão dourada).');
-if(id>=2&&id<=4)return g('Inimigo forte','Inicie uma batalha contra uma Shadow considerada forte para o nível do grupo.','O comentário pode ser substituído pelo Weakness Scan após o Social Link 2 da Rise.');
-if(id>=5&&id<=14)return g('Abertura neutra',`Entre em uma batalha neutra contra ${Math.floor((id-5)/2)+1} inimigo(s).`,'Não acerte nem seja acertado por trás ao iniciar o combate. Depois do Social Link 2, essas falas ficam raras.');
-if(id>=15&&id<=24)return g('Abertura com vantagem',`Inicie a luta com vantagem contra ${Math.floor((id-15)/2)+1} inimigo(s).`,'Ataque a Shadow pelas costas. O Weakness Scan pode substituir a fala após o Rank 2.');
-if(id>=25&&id<=34)return g('Emboscada',`Seja emboscado por ${Math.floor((id-25)/2)+1} inimigo(s).`,'Deixe a Shadow surpreender teu grupo por trás. O Weakness Scan pode impedir o comentário desejado.');
-if(id>=35&&id<=44)return g('Reforços',`Deixe um inimigo chamar ${Math.floor((id-35)/2)+1} reforço(s) durante a batalha.`,'É diferente de simplesmente encontrar esse número de inimigos no começo.');
-if(id>=45&&id<=58)return g('Imunidade no início',`Inicie uma batalha contra uma Shadow imune a ataques ${e}.`,'A fala precisa aparecer na batalha com caixa de texto; a tela de Analysis não conta. Depende do Weakness Scan da Rise (SL 2).');
-if(id>=59&&id<=72)return g('Fraqueza no início',`Inicie uma batalha contra uma Shadow fraca a ataques ${e}.`,'Procure a fala de abertura com caixa de texto, fora da tela de Analysis. Requer Weakness Scan (SL 2).');
-if(id>=73&&id<=79)return g('Aliado incapacitado',`Deixe ${who} ficar incapacitado (HP chegar a zero) durante o combate.`,'A fala só pode aparecer enquanto a batalha continua.','Guia');
-if(id>=80&&id<=87)return g('HP baixo',`Deixe ${who} ficar abaixo da metade da vida em batalha.`,'Evite curar imediatamente, para dar oportunidade ao comentário da Rise.','Estimativa');
-if(id>=88&&id<=95)return g('Derrubado pelo inimigo',`Deixe ${who} ser derrubado por um ataque inimigo.`,'Pode exigir que o ataque acerte uma fraqueza do personagem.');
-if(id>=96&&id<=103)return g('Tontura / Dizzy',`Deixe ${who} sofrer Dizzy e espere a Rise comentar.`,'Não confunda Dizzy com Knock Down.');
-if(id>=104&&id<=111)return g('Dano recebido',`Deixe ${who} sofrer um ataque perigoso e espere a reação da Rise.`,'O contexto exato desta variação não está claro na tabela.','Estimativa');
-if(id>=112&&id<=119)return g('Esquiva',`Faça ${who} esquivar de um ataque inimigo.`,'Esquivar é diferente de errar um ataque próprio.');
-if(id>=120&&id<=123)return g('Inimigo fugindo','Deixe uma Shadow fugir da batalha.','Aplicar Fear ao inimigo pode facilitar a fuga.');
-if(id===124)return g('Golden Hand fugindo','Encontre duas ou mais Golden Hands e deixe uma escapar.');
-if(id>=125&&id<=128)return g('Invocação de inimigo','Espere uma Shadow chamar ajuda ou convocar outro inimigo.');
-if(id===129)return g('Inimigo se levantou','Derrube uma Shadow e deixe-a se levantar em um turno posterior.');
-if(id===130)return g('Inimigo se curando','Enfrente uma Shadow que use uma habilidade de recuperação de HP.','É uma condição descrita pelo texto, sem confirmação específica no guia.','Estimativa');
-if(id===131||id===245)return g('Fuga bem-sucedida','Use Escape e aguarde até conseguir escapar.','A Rise pode comentar quando surgir uma oportunidade.');
-if(id>=132&&id<=137)return g('Aliado retornou',`Faça ${who} se recuperar de uma incapacidade e voltar à luta.`,'A origem exata do comentário pode variar.','Estimativa');
-if(id===138||id===248)return g('Fuga impedida','Tente fugir de uma batalha na qual não seja possível escapar ou a tentativa falhe.','Chefes geralmente impedem a fuga.');
-if(id===139||id===246||id===247)return g('Tentativa de fuga','Use o comando Escape mais de uma vez enquanto a Rise procura uma oportunidade.');
-if(id>=140&&id<=146)return g('Derrubado / Dizzy',`Deixe ${who} cair e não se recuperar imediatamente.`,'A tabela associa essas falas à dificuldade para se levantar.','Estimativa');
-if(id>=147&&id<=153)return g('Ataque reduzido',`Deixe o ataque de ${who} cair (por exemplo, Tarunda).`,'Precisa ser redução aplicada ao aliado, não a um inimigo.');
-if(id>=154&&id<=160)return g('Defesa reduzida',`Deixe a defesa de ${who} cair (por exemplo, Rakunda).`);
-if(id>=161&&id<=167)return g('Agilidade reduzida',`Deixe a agilidade de ${who} cair (por exemplo, Sukunda).`);
-if(id>=168&&id<=177)return g('Inimigos restantes',`Deixe exatamente ${5-Math.floor((id-168)/2)} inimigo(s) ainda ativo(s) na batalha.`,'Derrote alguns, sem encerrar o combate.');
-if(id>=178&&id<=185)return g('HP baixo',id===178?'Deixe dois ou mais integrantes do grupo com menos de 50% do HP.':`Deixe ${who} com menos de 50% do HP durante a luta.`,'Espere o aviso da Rise antes de curar.');
-const states={186:['Pânico','Panic'],187:['Envenenamento','Poison'],188:['Medo','Fear'],189:['Fúria','Rage'],190:['Queda','Knock Down'],191:['Exaustão','Exhaustion'],192:['Enervation','Enervation'],193:['Persona selada','Silence / Seal']};
-if(states[id])return g(states[id][0],`Faça o protagonista sofrer ${states[id][1]} durante uma batalha.`,'Apenas a condição do protagonista, não a dos outros membros.');
-if(id===194)return g('Levantar após queda','Deixe o protagonista se levantar após ser derrubado.');
-for(const [a,b,c,v] of [[195,200,'Pânico','Panic'],[201,207,'Envenenamento','Poison'],[208,213,'Medo','Fear'],[214,219,'Fúria','Rage'],[220,225,'Tontura','Dizzy'],[226,231,'Exaustão','Exhaustion'],[232,237,'Enervation','Enervation'],[238,243,'Persona selada','Silence / Seal']])if(id>=a&&id<=b)return g(c,`Faça ${who} sofrer ${v} durante a luta.`,'Espere a Rise anunciar o estado antes de curá-lo.');
-if(id===244)return g('Fuga','Use o comando de fuga durante o combate.','Fala breve cujo gatilho é menos específico.','Estimativa');
-if(id>=249&&id<=278)return g('Inimigo forte',`Inicie uma batalha contra uma Shadow forte que tenha a característica elemental indicada na frase (${e}).`,'O texto indica uma fraqueza ou imunidade adicional; o inimigo também deve ser forte.','Estimativa');
-if(id>=279&&id<=308)return g('Inimigo fraco',`Inicie uma batalha contra uma Shadow fraca para teu grupo${id>=281?' e com a fraqueza/imunidade elemental indicada na fala':''}.`,'“Weak enemy” aqui é força relativa ao grupo, não apenas fraqueza elemental.','Estimativa');
-if(id>=309&&id<=338)return g('Inimigo muito fraco',`Inicie uma batalha contra uma Shadow bem abaixo do nível do grupo${id>=311?' que tenha a propriedade elemental indicada':''}.`,'É difícil obter a fala exata após o Weakness Scan.','Estimativa');
-if(id>=339&&id<=341)return g('Comando Rush',id===341?'Mantenha o Rush ativo em turnos consecutivos.':'Ative o modo Rush durante o combate.');
-if(id>=342&&id<=348)return g('Derrotar o grupo inteiro',`Faça ${who} eliminar todos os inimigos restantes com uma ação.`,'Derrotar é zerar o HP, não apenas derrubar.');
-for(const [a,b,nm] of [[349,355,4],[356,362,3],[363,369,2],[370,390,1]])if(id>=a&&id<=b)return g('Inimigos derrotados',`Faça ${who} derrotar ${nm} inimigo(s) em uma única ação.`,'A fala exige derrotas (HP zerado), não apenas Knock Down.');
-if(id>=391&&id<=397)return g('Esquiva',`Faça ${who} se esquivar de um ataque de uma Shadow.`);
-for(const [a,b,nm] of [[398,404,4],[405,411,3],[412,418,2],[419,425,1]])if(id>=a&&id<=b)return g('Inimigos derrubados',`Faça ${who} derrubar ${nm} inimigo(s) em uma ação (Knock Down).`,'Acertar a fraqueza ou crítico pode derrubar, sem precisar matar.');
-if(id>=426&&id<=446)return g('Acertar fraqueza',`Faça ${who} acertar a fraqueza de um inimigo.`,'Use uma habilidade do elemento ao qual a Shadow é vulnerável.');
-if(id>=447&&id<=467)return g('Crítico / golpe forte',`Faça ${who} conseguir um acerto crítico físico ou um golpe de destaque.`,'Esta família mistura variações de golpes e críticas; o gatilho específico pode variar.','Estimativa');
-if(id>=468&&id<=474)return g('Ataque errou',`Faça ${who} errar um ataque.`,'O ataque do personagem deve falhar; não é a mesma coisa que esquivar.');
-if(id>=475&&id<=481)return g('Derrubado',`Deixe ${who} cair após falhar ou receber um ataque.`,'A tabela não distingue perfeitamente as situações para esta variação.','Estimativa');
-if(id>=482&&id<=487)return g('Medo e fuga',`Faça ${who} sofrer Fear e tentar fugir por conta própria.`,'A fuga precisa acontecer pelo estado de medo, não pelo comando Escape.');
-if(id>=488&&id<=490)return g('Protagonista incapacitado','Deixe o protagonista cair inconsciente em batalha.','O guia aponta Rank 10 do Social Link da Rise para estas variações.');
-if(id>=491&&id<=503)return g('Evento especial','Fala ligada a uma condição rara ou evento de derrota.','Não há método geral confiável de farm; não priorize para as 250.','Incerta','special');
-if(id>=504&&id<=506)return g('Vitória','Vença uma batalha e espere o comentário da Rise.','Há relatos conflitantes sobre falas sem caixa de texto ou pós-combate.','Incerta','special');
-if(id>=507&&id<=519)return g('Evento de história','Fala ligada a uma batalha ou evento roteirizado.','Não há confirmação de que conte para Hardcore Risette Fan.','Incerta','special');
-if(id>=520&&id<=525)return g('Subir de nível',`Faça ${who} subir de nível ao fim de uma batalha.`,'Como é pós-combate, não conte com ela para a conquista.','Incerta','special');
-if(id>=526&&id<=539)return g('Chefe / história','Fala vinculada a um chefe ou evento específico da história.','Algumas são automáticas e a elegibilidade para o troféu é debatida.','Incerta','special');
-if(id>=540&&id<=548)return g('Chefe de Void Quest','Enfrente o chefe de Void Quest e espere o evento da carapaça/forma verdadeira.','Fala exclusiva de chefe; contagem no troféu é incerta.','Incerta','special');
-if(id>=549&&id<=568)return g('Chefe de Heaven',id>=557?`Durante a luta contra o chefe de Heaven, deixe ${who} ser controlado.`:'Espere o evento particular do chefe de Heaven.','Fala exclusiva de chefe; contagem no troféu é incerta.','Incerta','special');
-if(id>=569&&id<=572)return g('Quad Converge','Durante o chefe de Heaven, espere Quad Converge reforçar o elemento mencionado.','É um evento específico de chefe e pode não contar para a conquista.','Incerta','special');
-if(id>=573&&id<=620)return g('Chefe / batalha de história','Prossiga na batalha de chefe ou evento roteirizado correspondente à frase.','Não há gatilho repetível nem contagem confirmada para a conquista.','Incerta','special');
-if(id>=621&&id<=624)return g('Comentário genérico',id===621?'Derrote quatro inimigos em uma única ação.':id===622?'Derrote três inimigos em uma ação.':id===623?'Derrote dois inimigos em uma ação.':'Faça uma ação positiva de combate.','Condição inferida pelo texto, mas não confirmada para a conquista.','Incerta','special');
-return g('Condição desconhecida','O gatilho desta entrada não foi identificado com segurança.','Evite priorizar até haver uma fonte adicional.','Incerta','special');}
-
+function how(r){
+ const id=r.id,actor=character(r),who=label(actor),e=element(r.name);
+ const g=(category,guide,detail='',confidence='Guide',kind='regular')=>identified(category,guide,detail,confidence,kind);
+ if(isPlaceholder(r))return g('Internal entry','No dialogue text is identified for this entry.','There is no known trigger. Hidden from the default list.','Unknown','internal');
+ if(id===0)return g('Special enemy','Start a fight with the Reaper.','A rare encounter, not useful for regular farming.');
+ if(id===1)return g('Rare enemy','Start a fight against a Golden Hand.');
+ if(id>=2&&id<=4)return g('Strong enemy','Start a fight against a Shadow much stronger than your party.','Weakness Scan may override these lines after Rise Social Link rank 2.');
+ if(id>=5&&id<=14)return g('Normal encounter',`Start a neutral battle against ${Math.floor((id-5)/2)+1} enemies.`,'Neither side should gain the initiative. These lines become rarer after Weakness Scan.');
+ if(id>=15&&id<=24)return g('Player advantage',`Start a battle with an advantage against ${Math.floor((id-15)/2)+1} enemies.`,'Strike a Shadow from behind. Weakness Scan may override the opening line.');
+ if(id>=25&&id<=34)return g('Enemy advantage',`Let ${Math.floor((id-25)/2)+1} enemies ambush your party.`,'Let a Shadow attack you from behind. Weakness Scan may override the line.');
+ if(id>=35&&id<=44)return g('Reinforcements',`Let an enemy summon ${Math.floor((id-35)/2)+1} reinforcements in battle.`,'This is not the same as starting against that many enemies.');
+ if(id>=45&&id<=58)return g('Enemy resistance',`Start a fight against a Shadow immune to ${e} attacks.`,'The callout must appear in battle, not in Analysis. Requires Weakness Scan (Rise Social Link rank 2).');
+ if(id>=59&&id<=72)return g('Enemy weakness',`Start a fight against a Shadow weak to ${e} attacks.`,'The callout must appear in battle, not in Analysis. Requires Weakness Scan (Rise Social Link rank 2).');
+ if(id>=73&&id<=79)return g('Ally knocked out',`Have ${who} fall to zero HP while the fight continues.`);
+ if(id>=80&&id<=87)return g('Low HP',`Have ${who} fall below half HP during battle.`,'Wait for Rise to comment before healing.','Estimated');
+ if(id>=88&&id<=95)return g('Knockdown',`Have an enemy knock down ${who}.`,'This may require the enemy to hit a weakness.');
+ if(id>=96&&id<=103)return g('Dizzy',`Have ${who} become Dizzy, then wait for a callout.`,'Dizzy is not the same as Knock Down.');
+ if(id>=104&&id<=111)return g('Heavy damage',`Have ${who} take a dangerous hit.`,'The exact trigger of these variations is not fully established.','Estimated');
+ if(id>=112&&id<=119)return g('Dodge',`Have ${who} dodge an enemy attack.`,'Dodging is different from missing an attack.');
+ if(id>=120&&id<=123)return g('Enemy escapes','Let a Shadow flee from battle.','Fear may help cause an enemy to flee.');
+ if(id===124)return g('Golden Hand escapes','Encounter multiple Golden Hands and allow one to escape.');
+ if(id>=125&&id<=128)return g('Enemy summons help','Wait for a Shadow to summon an ally.');
+ if(id===129)return g('Enemy recovers','Knock down a Shadow and allow it to get back up.');
+ if(id===130)return g('Enemy heals','Fight a Shadow that uses an HP recovery skill.','Inferred from the line text, not confirmed by the guide.','Estimated');
+ if(id===131||id===245)return g('Escape succeeds','Use Escape until you successfully flee.');
+ if(id>=132&&id<=137)return g('Ally returns',`Have ${who} recover from being incapacitated.`,'The exact trigger may differ.','Estimated');
+ if(id===138||id===248)return g('Escape blocked','Try to escape a fight where escaping is blocked or the attempt fails.');
+ if(id===139||id===246||id===247)return g('Escape attempt','Attempt to flee repeatedly while Rise looks for an opening.');
+ if(id>=140&&id<=146)return g('Down / Dizzy',`Have ${who} knocked down and unable to get up immediately.`,'The precise trigger is not confirmed.','Estimated');
+ if(id>=147&&id<=153)return g('Attack lowered',`Have ${who} receive an Attack debuff, such as Tarunda.`,'The debuff must affect your teammate.');
+ if(id>=154&&id<=160)return g('Defense lowered',`Have ${who} receive a Defense debuff, such as Rakunda.`);
+ if(id>=161&&id<=167)return g('Agility lowered',`Have ${who} receive an Agility debuff, such as Sukunda.`);
+ if(id>=168&&id<=177)return g('Enemies remaining',`Leave exactly ${5-Math.floor((id-168)/2)} enemies alive in battle.`,'Defeat some enemies without ending the fight.');
+ if(id>=178&&id<=185)return g('Low HP',id===178?'Have two or more party members below half HP.':`Have ${who} fall below half HP in battle.`,'Wait for Rise to comment before healing.');
+ const states={186:'Panic',187:'Poison',188:'Fear',189:'Rage',190:'Knock Down',191:'Exhaustion',192:'Enervation',193:'Silence / Seal'};
+ if(states[id])return g(states[id],`Have the protagonist suffer ${states[id]} during battle.`);
+ if(id===194)return g('Recover from knockdown','Have the protagonist get back up after being knocked down.');
+ for(const [a,b,status] of [[195,200,'Panic'],[201,207,'Poison'],[208,213,'Fear'],[214,219,'Rage'],[220,225,'Dizzy'],[226,231,'Exhaustion'],[232,237,'Enervation'],[238,243,'Silence / Seal']])if(id>=a&&id<=b)return g(status,`Have ${who} suffer ${status} during battle.`,'Wait for Rise to announce the status before healing it.');
+ if(id===244)return g('Escape','Use the Escape command during battle.','The exact trigger of this short line is unclear.','Estimated');
+ if(id>=249&&id<=278)return g('Strong enemy',`Start a battle against a strong Shadow with the ${e} property noted in the line.`,'The enemy must also have the relevant weakness or resistance.','Estimated');
+ if(id>=279&&id<=308)return g('Weak enemy',`Start a battle against a Shadow weaker than your party${id>=281?', with the weakness or resistance described in the line':''}.`,'Weak refers to strength relative to your party, not just an elemental weakness.','Estimated');
+ if(id>=309&&id<=338)return g('Very weak enemy',`Start a battle against a Shadow far below your party’s level${id>=311?', with the elemental property described in the line':''}.`,'Weakness Scan makes these callouts harder to hear.','Estimated');
+ if(id>=339&&id<=341)return g('Rush mode',id===341?'Keep Rush mode active for several turns.':'Activate Rush mode in battle.');
+ if(id>=342&&id<=348)return g('Defeat all enemies',`Have ${who} defeat all remaining enemies in one action.`,'Defeat means reduce HP to zero, not just knock down.');
+ for(const [a,b,n] of [[349,355,4],[356,362,3],[363,369,2],[370,390,1]])if(id>=a&&id<=b)return g('Enemies defeated',`Have ${who} defeat ${n} enemies in one action.`,'Enemies must be defeated rather than simply knocked down.');
+ if(id>=391&&id<=397)return g('Dodge',`Have ${who} dodge an enemy attack.`);
+ for(const [a,b,n] of [[398,404,4],[405,411,3],[412,418,2],[419,425,1]])if(id>=a&&id<=b)return g('Enemies knocked down',`Have ${who} knock down ${n} enemies with one action.`,'A weakness hit or critical can knock down an enemy without defeating it.');
+ if(id>=426&&id<=446)return g('Hit a weakness',`Have ${who} hit an enemy weakness.`,'Use a skill with an element the Shadow is weak against.');
+ if(id>=447&&id<=467)return g('Critical / strong hit',`Have ${who} land a critical or another strong attack.`,'The exact trigger can vary across these lines.','Estimated');
+ if(id>=468&&id<=474)return g('Missed attack',`Have ${who} miss an attack.`,'Missing an attack is different from dodging.');
+ if(id>=475&&id<=481)return g('Knockdown',`Have ${who} fall after an enemy attack.`,'Not every trigger in this group is documented.','Estimated');
+ if(id>=482&&id<=487)return g('Fear and escape',`Have ${who} suffer Fear and flee automatically.`,'The escape must be caused by Fear rather than the Escape command.');
+ if(id>=488&&id<=490)return g('Protagonist knocked out','Have the protagonist fall unconscious during battle.','The guide associates these variations with Rise Social Link rank 10.');
+ if(id>=491&&id<=503)return g('Special event','A rare scripted event or defeat-related line.','No reliable farming method; do not prioritize it.','Uncertain','special');
+ if(id>=504&&id<=506)return g('Victory','Win a battle and wait for Rise’s response.','It is unclear if these post-battle lines count.','Uncertain','special');
+ if(id>=507&&id<=519)return g('Story event','Appears in a scripted battle or story event.','Achievement eligibility is unconfirmed.','Uncertain','special');
+ if(id>=520&&id<=525)return g('Level up',`Have ${who} level up at the end of a battle.`,'Post-battle lines are not reliable for the achievement.','Uncertain','special');
+ if(id>=526&&id<=539)return g('Boss / story','A boss or story-specific event.','Eligibility for the achievement is disputed.','Uncertain','special');
+ if(id>=540&&id<=548)return g('Void Quest boss','Fight the Void Quest boss and wait for the shell or true-form event.','Boss-exclusive, achievement eligibility unclear.','Uncertain','special');
+ if(id>=549&&id<=568)return g('Heaven boss',id>=557?`During the Heaven boss fight, have ${who} become controlled.`:'Wait for the Heaven boss scripted event.','Boss-exclusive, achievement eligibility unclear.','Uncertain','special');
+ if(id>=569&&id<=572)return g('Quad Converge','During the Heaven boss fight, wait for Quad Converge to amplify the named element.','Boss-exclusive, achievement eligibility unclear.','Uncertain','special');
+ if(id>=573&&id<=620)return g('Boss / story fight','Advance through the corresponding scripted boss fight or story event.','No known repeatable trigger or confirmed achievement eligibility.','Uncertain','special');
+ if(id>=621&&id<=624)return g('General combat line',id===621?'Defeat four enemies in one action.':id===622?'Defeat three enemies in one action.':id===623?'Defeat two enemies in one action.':'Perform a successful combat action.','Based on the line text; achievement eligibility is unconfirmed.','Uncertain','special');
+ return g('Unknown trigger','No reliable trigger is known for this entry.','Do not prioritize this line without additional evidence.','Uncertain','special');
+}
 function loadTSV(text){
  const rows=text.replace(/^\uFEFF/,'').split(/\r?\n/).map(x=>x.trimEnd()).filter(Boolean);
  const cols=rows[0].split('\t').map(x=>x.trim().toLowerCase());
