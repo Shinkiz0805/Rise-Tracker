@@ -21,18 +21,6 @@ O site lê os saves **apenas no navegador**, sem enviá-los para a internet e se
 - Algumas condições e falas de chefes são estimativas e podem não contar para a conquista. Use as etiquetas de confiabilidade.
 - O site não salva uploads nem os envia a servidores. O carregamento dos textos consulta uma fonte pública no GitHub.
 
-## Publicação no GitHub Pages
-
-Este repositório contém o site completo em `index.html`, na branch `main`.
-Para ativar a hospedagem pela primeira vez:
-
-1. Abra **Settings → Pages** no repositório.
-2. Em **Build and deployment**, selecione **Deploy from a branch**.
-3. Escolha `main` e `/(root)`, depois **Save**.
-4. Quando a publicação terminar, acesse [Rise Tracker](https://shinkiz0805.github.io/Rise-Tracker/).
-
-Os arquivos `data000X.bin` dos jogadores são processados no navegador, não são incluídos neste repositório.
-
 ## Créditos e fontes
 
 - Mapeamento das flags: [zarroboogs/p4g-ct](https://github.com/zarroboogs/p4g-ct).
